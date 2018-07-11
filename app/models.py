@@ -10,9 +10,13 @@ class Mentor(db.Model):
     __tablename__ = 'mentor'
 
     id = db.Column(db.Integer, primary_key=True)
-    mentor_name = db.Column(db.String(64), unique=True, nullable=False)
+    mentor_name = db.Column(db.String(256), unique=True, nullable=False)
+    mentor_email = db.Column(db.String(256), unique=True, nullable=False)
 
     mentee = db.relationship("Mentee", secondary=mentor_mentee)
+
+    def __repr__(self):
+        return '<Mentor %r>' % self.mentor_name
 
 
 class Mentee(db.Model):
@@ -22,6 +26,9 @@ class Mentee(db.Model):
     mentee_name = db.Column(db.String(64), unique=True, nullable=False)
 
     mentor = db.relationship("Mentor", secondary=mentor_mentee)
+
+    def __repr__(self):
+        return '<Mentee %r>' % self.mentee_name
 
 
 class Task(db.Model):
@@ -37,11 +44,5 @@ class Task(db.Model):
     task = db.Column(db.String(1024), nullable=False)
     at_created = db.Column(db.DateTime, default=db.func.current_timestamp(), nullable=False)
 
-    # def __init__(self, user_id, task, at_created=math.floor(time.time())):
-    #     self.user_id = user_id
-    #     self.task = task
-    #     self.at_created = at_created
-    #     super(Task, self).__init__()
-    #
-    # def __repr__(self):
-    #     return '<Task %r>' % self.task
+    def __repr__(self):
+        return '<Task %r>' % self.task
