@@ -1,8 +1,4 @@
-import math
-import time
-from flask_admin.contrib.sqla import ModelView
-from . import admin, db
-
+from . import db
 
 mentor_mentee = db.Table('mentor_mentee', db.metadata,
     db.Column('mentor_id', db.Integer, db.ForeignKey('mentor.id')),
@@ -36,14 +32,11 @@ class Task(db.Model):
     task = db.Column(db.String(1024), unique=True, nullable=False)
     at_created = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, user_id, task, at_created=math.floor(time.time())):
-        self.user_id = user_id
-        self.task = task
-        self.at_created = at_created
-        super(Task, self).__init__()
-
-    def __repr__(self):
-        return '<Task %r>' % self.task
-
-
-admin.add_view(ModelView(Task, db.session))
+    # def __init__(self, user_id, task, at_created=math.floor(time.time())):
+    #     self.user_id = user_id
+    #     self.task = task
+    #     self.at_created = at_created
+    #     super(Task, self).__init__()
+    #
+    # def __repr__(self):
+    #     return '<Task %r>' % self.task
