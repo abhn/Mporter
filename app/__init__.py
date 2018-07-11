@@ -7,6 +7,10 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 
+SECRET_KEY = os.environ['MPORTER_SECRET']
+
+app.secret_key = SECRET_KEY
+
 admin = Admin(app, name='Mporter', template_mode='bootstrap3')
 
 
