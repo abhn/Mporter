@@ -1,0 +1,6 @@
+import os
+
+SEND_MAIL_HOUR = 8
+CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
+DB_URL = os.environ['SQLALCHEMY_DATABASE_URI']
+SECRET_KEY = os.environ['MPORTER_SECRET']

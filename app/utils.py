@@ -1,5 +1,4 @@
 from .models import Task, Mentee, Mentor
-from . import db
 import datetime
 
 
@@ -8,7 +7,7 @@ def send_email_driver():
     first get all mentees,
         then for each mentee, get his mentors and his tasks in the last 24 hours
             then for each mentor, send an email
-    :return:
+    :return: None
     """
 
     # get all mentees
@@ -49,4 +48,4 @@ def send_mail(email, email_string):
     :param email_string:
     :return:
     """
-    pass
+    print('send mail called')
