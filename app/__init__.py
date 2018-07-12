@@ -49,10 +49,11 @@ from .utils import send_email_driver
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(
-        crontab(hour=SEND_MAIL_HOUR),
-        handle_mail.s(),
-    )
+    # sender.add_periodic_task(
+    #     crontab(hour=SEND_MAIL_HOUR),
+    #     handle_mail.s(),
+    # )
+    sender.add_periodic_task(10.0, send_email_driver().s(), name='add every 10')
 
 
 @celery.task

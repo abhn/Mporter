@@ -1,5 +1,7 @@
 from .models import Task, Mentee, Mentor
 import datetime
+import requests
+from .app_config import MAILGUN_KEY, MAILGUN_SANDBOX
 
 
 def send_email_driver():
@@ -37,6 +39,9 @@ def send_email_driver():
         for count, task in enumerate(tasks, start=1):
             email_string += '#%o %s \n' % (count, task.task)
 
+        if email_string == '':
+            continue
+
         for email in current_mentee_mentor_emails:
             send_mail(email, email_string)
 
@@ -44,8 +49,22 @@ def send_email_driver():
 def send_mail(email, email_string):
     """
     handles email sending procedures
-    :param email:
-    :param email_string:
+    :param email
+    :param email_string
     :return:
     """
-    print('send mail called')
+
+    key = MAILGUN_KEY
+    sandbox = MAILGUN_SANDBOX
+    recipient = email
+
+    request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(sandbox)
+    data = {
+        'from': "postmaster@" + MAILGUN_SANDBOX,
+        'to': recipient,
+        'subject': 'Daily Report',
+        'text': email_string
+    }
+    request = requests.post(request_url, auth=('api', key), data=data)
+
+    return request.text
