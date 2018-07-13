@@ -5,7 +5,6 @@ from flask_admin.contrib.sqla import ModelView
 from flask_migrate import Migrate
 from .celery_utils import make_celery
 import os
-from celery.schedules import crontab
 from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
 
 app = Flask(__name__)
@@ -49,6 +48,10 @@ from .utils import send_email_driver
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
+    """
+    Sets up a celery scheduled task
+    Can be used to call a routine at a particular interval or at some specific time of the day
+    """
     # sender.add_periodic_task(
     #     crontab(hour=SEND_MAIL_HOUR),
     #     handle_mail.s(),
@@ -58,6 +61,10 @@ def setup_periodic_tasks(sender, **kwargs):
 
 @celery.task
 def handle_mail():
+    """
+    Just a helper method wrapped by celery.task.
+    This will get called at the schedule descriped in @setup_periodic_tasks
+    """
     send_email_driver()
 
 
