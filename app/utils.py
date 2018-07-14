@@ -6,9 +6,7 @@ from .app_config import MAILGUN_KEY, MAILGUN_SANDBOX
 
 def send_email_driver():
     """
-    first get all mentees,
-        then for each mentee, get his mentors and his tasks in the last 24 hours
-            then for each mentor, send an email
+    Gets all the email recipients and sends them their mentee's past 24 hour tasks
     :return: None
     """
 
