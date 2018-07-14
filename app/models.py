@@ -1,5 +1,6 @@
 from . import db
 from sqlalchemy.orm import validates
+# from sqlalchemy.ext.declarative import declarative_base
 
 mentor_mentee = db.Table(
     'mentor_mentee',

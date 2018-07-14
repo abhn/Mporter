@@ -1,7 +1,7 @@
 from .models import Tasks, Mentees, Mentors
 from datetime import datetime, timedelta
-from requests import post
-from .app_config import MAILGUN_KEY, MAILGUN_SANDBOX
+import requests
+from .app_config import MAILGUN_KEY, MAILGUN_URL, MAILGUN_TESTMAIL_ADDR
 
 
 def send_email_driver():
@@ -53,16 +53,15 @@ def send_mail(email, email_string):
     """
 
     key = MAILGUN_KEY
-    sandbox = MAILGUN_SANDBOX
     recipient = email
 
-    request_url = 'https://api.mailgun.net/v2/{0}/messages'.format(sandbox)
+    request_url = MAILGUN_URL
     data = {
-        'from': "postmaster@" + MAILGUN_SANDBOX,
+        'from': MAILGUN_TESTMAIL_ADDR,
         'to': recipient,
         'subject': 'Daily Report',
         'text': email_string
     }
-    request = post(request_url, auth=('api', key), data=data)
+    request = requests.post(request_url, auth=('api', key), data=data)
 
     return request.text
