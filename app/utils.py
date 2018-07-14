@@ -1,4 +1,4 @@
-from .models import Task, Mentee, Mentor
+from .models import Tasks, Mentees, Mentors
 import datetime
 import requests
 from .app_config import MAILGUN_KEY, MAILGUN_SANDBOX
@@ -26,17 +26,17 @@ def send_email_driver():
     """
 
     # get all mentees
-    mentees = Mentee.query.all()
+    mentees = Mentees.query.all()
 
     # for each mentee, get the mentors and tasks
     for mentee in mentees:
         mentors = mentee.mentor
 
         # get only tasks from the past day
-        tasks = Task\
+        tasks = Tasks\
             .query\
             .filter_by(mentee=mentee) \
-            .filter(Task.at_created >= datetime.datetime.today() - datetime.timedelta(days=1))\
+            .filter(Tasks.at_created >= datetime.datetime.today() - datetime.timedelta(days=1))\
             .all()
 
         current_mentee_mentor_emails = []

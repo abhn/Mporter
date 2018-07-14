@@ -24,12 +24,12 @@ migrate = Migrate(app, db)
 
 # now import models to prevent cylic import errors,
 # there has to be a better way to do this, sigh.
-from .models import Task, Mentee, Mentor
+from .models import Tasks, Mentees, Mentors
 
 # add the admin panel views
-admin.add_view(ModelView(Task, db.session))
-admin.add_view(ModelView(Mentor, db.session))
-admin.add_view(ModelView(Mentee, db.session))
+admin.add_view(ModelView(Tasks, db.session))
+admin.add_view(ModelView(Mentors, db.session))
+admin.add_view(ModelView(Mentees, db.session))
 
 # create all the models
 db.create_all()
