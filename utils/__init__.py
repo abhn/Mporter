@@ -1,4 +1,4 @@
-import os
+from os import environ
 
 
 def get_env_var(name):
@@ -8,7 +8,7 @@ def get_env_var(name):
     :return: environment variable's value if found else raise KeyError
     """
     try:
-        return os.environ[name]
+        return environ[name]
     except KeyError:
         return KeyError('{} not found in environment variables'.format(name))
 

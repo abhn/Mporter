@@ -1,6 +1,6 @@
 from .models import Tasks, Mentees, Mentors
-import datetime
-import requests
+from datetime import datetime, timedelta
+from requests import post
 from .app_config import MAILGUN_KEY, MAILGUN_SANDBOX
 
 
@@ -23,7 +23,7 @@ def send_email_driver():
         tasks = Tasks\
             .query\
             .filter_by(mentee=mentee) \
-            .filter(Tasks.at_created >= datetime.datetime.today() - datetime.timedelta(days=1))\
+            .filter(Tasks.at_created >= datetime.today() - timedelta(days=1))\
             .all()
 
         current_mentee_mentor_emails = []
@@ -65,6 +65,6 @@ def send_mail(email, email_string):
         'subject': 'Daily Report',
         'text': email_string
     }
-    request = requests.post(request_url, auth=('api', key), data=data)
+    request = post(request_url, auth=('api', key), data=data)
 
     return request.text

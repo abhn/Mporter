@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin.contrib.sqla import ModelView
 from flask_migrate import Migrate
 from .celery_utils import make_celery
-import os
+from os import environ
 from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
 
 app = Flask(__name__)
@@ -75,5 +75,5 @@ def index():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
