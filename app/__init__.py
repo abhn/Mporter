@@ -6,17 +6,20 @@ from flask_migrate import Migrate
 from .celery_utils import make_celery
 from os import environ
 from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
+from .factory import create_app
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
-app.secret_key = SECRET_KEY
+# app.secret_key = SECRET_KEY
+
+app = create_app()
 
 admin = Admin(app, name='Mporter', template_mode='bootstrap3')
 
 # the values of those depend on your setup
 
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # silence the deprecation warning
+# app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # silence the deprecation warning
 
 # initialize the db object
 db = SQLAlchemy(app)
