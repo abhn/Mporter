@@ -1,50 +1,60 @@
-import os
-import tempfile
+from testing.postgresql import Postgresql
 
 import pytest
 
-from app import app
+from app.factory import create_app
+from app.db import db_config
+
 from flask_sqlalchemy import SQLAlchemy
 
-from app import db
-from app.models import Tasks, Mentees, Mentors
-import unittest
-from flask_testing import TestCase
-import os
+from app.app_config import DB_URL_TEST
+
+_db = SQLAlchemy()
 
 
-@pytest.fixture
-def client():
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI_TEST']
-    app.config['TESTING'] = True
-
-    client = app.test_client()
-
-    # with app.app_context():
-    #     app.init_db()
-
-    yield client
+from app.models import Tasks
 
 
-def test_landing_page(client):
-    """testing if test suite works"""
+class TestConfig(object):
+    DEBUG = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    ENV = 'test'
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI=DB_URL_TEST
 
-    rv = client.get('/')
-    assert b'hello world' in rv.data
+
+@pytest.yield_fixture(scope='session')
+def app():
+    _app = create_app(TestConfig)
+    db_config(_app)
+    with Postgresql() as postgresql:
+        _app.config['SQLALCHEMY_DATABASE_URI'] = postgresql.url()
+        ctx = _app.app_context()
+        ctx.push()
+
+        yield _app
+
+        ctx.pop()
 
 
-def test_models(client):
+@pytest.fixture(scope='session')
+def testapp(app):
+    return app.test_client()
 
-    db = SQLAlchemy(client)
 
-    # create all the models
-    db.create_all()
-    db.session.commit()
+@pytest.yield_fixture(scope='session')
+def db(app):
+    _db.app = app
+    _db.create_all()
 
-    # create a mentee
-    mentee = Mentees(mentee_name='test_mentee_123')
+    yield _db
 
-    db.session.add(mentee)
-    db.session.commit()
+    _db.drop_all()
 
-    assert mentee in db.session
+
+def test_admin_landing(testapp):
+    """test if landing page works"""
+
+    rv = testapp.get('/admin/')
+    assert rv.status == '200 OK'
+
