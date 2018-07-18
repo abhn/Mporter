@@ -1,10 +1,6 @@
-from flask import Flask
-
 from .app_config import DB_URL, SECRET_KEY
 
 from flask import Flask
-from flask_admin import Admin
-from flask_sqlalchemy import SQLAlchemy
 
 
 class DevConfig(object):
@@ -13,7 +9,7 @@ class DevConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-_db = SQLAlchemy()
+# _db = SQLAlchemy()
 
 
 def create_app(config=None):
