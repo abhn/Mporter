@@ -6,3 +6,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. 
+
+### Features
+
+### Getting Started
+
+### Contributing
+
+### Copyright
