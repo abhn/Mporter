@@ -29,3 +29,6 @@ venv
 build
 venv
 .idea
+
+.pytest_cache/
+instance/

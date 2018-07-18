@@ -1,4 +1,4 @@
-from . import db
+from .db import _db as db
 from sqlalchemy.orm import validates
 # from sqlalchemy.ext.declarative import declarative_base
 
