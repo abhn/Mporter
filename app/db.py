@@ -32,3 +32,5 @@ def db_config(app):
     # create all the models
     db.create_all()
     db.session.commit()
+
+    return db
