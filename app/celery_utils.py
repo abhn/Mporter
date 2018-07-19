@@ -1,6 +1,6 @@
 from celery import Celery
 from app import app
-from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
+from .app_config import CELERY_BROKER_URL
 
 
 def make_celery(app):
@@ -9,8 +9,7 @@ def make_celery(app):
     :param app: flask app instance
     :return: celery instance
     """
-    celery = Celery(app.import_name, backend=app.config['CELERY_RESULT_BACKEND'],
-                    broker=app.config['CELERY_BROKER_URL'])
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
     TaskBase = celery.Task
 

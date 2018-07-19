@@ -1,4 +1,4 @@
-from .app_config import DB_URL, SECRET_KEY
+from .app_config import DB_URL, SECRET_KEY, CELERY_BROKER_URL
 
 from flask import Flask
 
@@ -7,6 +7,7 @@ class DevConfig(object):
     SECRET_KEY = SECRET_KEY
     SQLALCHEMY_DATABASE_URI = DB_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CELERY_BROKER_URL = CELERY_BROKER_URL
 
 
 # _db = SQLAlchemy()
