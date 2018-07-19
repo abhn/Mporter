@@ -4,7 +4,7 @@ import requests
 from .app_config import MAILGUN_KEY, MAILGUN_URL, MAILGUN_TESTMAIL_ADDR
 
 
-def send_email_driver():
+def send_email_driver(is_test=None):
     """
     Gets all the email recipients and sends them their mentee's past 24 hour tasks
     :return: None
@@ -12,6 +12,9 @@ def send_email_driver():
 
     # get all mentees
     mentees = Mentees.query.all()
+
+    # track the number of emails to send, for testing and debugging purposes
+    ctr = 0
 
     # for each mentee, get the mentors and tasks
     for mentee in mentees:
@@ -41,7 +44,12 @@ def send_email_driver():
             continue
 
         for email in current_mentee_mentor_emails:
-            send_mail(email, email_string)
+            # if this is a test, don't send the email
+            if is_test is None:
+                send_mail(email, email_string)
+            ctr += 1
+
+    return ctr
 
 
 def send_mail(email, email_string):

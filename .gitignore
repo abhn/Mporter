@@ -32,3 +32,6 @@ venv
 
 .pytest_cache/
 instance/
+
+.coverage
+coverage.xml
