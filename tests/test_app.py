@@ -7,6 +7,8 @@ from app.db import db_config, _db
 from app.celery_utils import make_celery
 from celery import Celery
 from utils import  get_env_var
+from app.utils import send_mail, send_email_driver
+import json
 
 from app.models import Tasks, Mentees, Mentors
 
@@ -176,3 +178,54 @@ def test_env_vars():
     assert SECRET_KEY is not None
     assert MAILGUN_KEY is not None
     assert MAILGUN_SANDBOX is not None
+
+
+def test_send_mail():
+    """should fail on incorrect email address"""
+
+    rv = send_mail('', 'hello, this is testing!')
+
+    rv_obj = json.loads(rv)
+
+    assert rv_obj['message'] == "'to' parameter is not a valid address. please check documentation"
+
+    # change email
+    rv = send_mail('testingmportertesting@gmail.com', 'hello, this is testing!')
+    rv_obj = json.loads(rv)
+
+    assert 'id' in rv_obj
+
+
+def test_send_mail_driver(session):
+    """to test this function, it is sufficient to verify that right number of emails are staged for sending"""
+
+    mentor1 = Mentors(mentor_name='test1mentor', mentor_email='test1@test1.com')
+    mentor2 = Mentors(mentor_name='test2mentor', mentor_email='test2@test2.com')
+    mentor3 = Mentors(mentor_name='test3mentor', mentor_email='test3@test3.com')
+
+    mentee1 = Mentees(mentee_name='test123mentee')
+    mentee2 = Mentees(mentee_name='test456mentee')
+
+    mentor1.mentee.append(mentee1)
+    mentor2.mentee.append(mentee2)
+
+    mentor3.mentee.append(mentee1)
+    mentor3.mentee.append(mentee2)
+
+    session.add_all([mentor1, mentor2, mentor3])
+    session.commit()
+
+    task1 = Tasks(task='task 1', mentee_id=mentee1.id)
+    task2 = Tasks(task='task 2', mentee_id=mentee2.id)
+    task3 = Tasks(task='task 3', mentee_id=mentee2.id)
+
+    session.add_all([task1, task2, task3])
+    session.commit()
+
+    email_count = send_email_driver(is_test=True)  # set is_test=True to not send an actual email
+
+    # mentor1 - 1
+    # mentor2 - 1
+    # mentor3 - 2
+    # total emails to send - 4
+    assert email_count == 4
