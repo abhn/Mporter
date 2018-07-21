@@ -11,3 +11,8 @@ MAILGUN_KEY = get_env_var('MAILGUN_KEY')
 MAILGUN_SANDBOX = get_env_var('MAILGUN_SANDBOX')
 MAILGUN_URL = 'https://api.mailgun.net/v2/{0}/messages'.format(MAILGUN_SANDBOX)
 MAILGUN_TESTMAIL_ADDR = 'postmaster@{}'.format(MAILGUN_SANDBOX)
+
+BASIC_AUTH_USERNAME = get_env_var('BASIC_AUTH_USERNAME')
+BASIC_AUTH_PASSWORD = get_env_var('BASIC_AUTH_PASSWORD')
+BASIC_AUTH_FORCE = True
+BASIC_AUTH_REALM = get_env_var('BASIC_AUTH_REALM')

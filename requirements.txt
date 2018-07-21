@@ -13,6 +13,7 @@ coverage==4.5.1
 decorator==4.3.0
 Flask==1.0.2
 Flask-Admin==1.5.1
+Flask-BasicAuth==0.2.0
 Flask-Migrate==2.2.1
 flask-shell-ipython==0.3.0
 Flask-SQLAlchemy==2.3.2
