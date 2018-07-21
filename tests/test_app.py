@@ -193,7 +193,7 @@ def test_send_mail():
     rv = send_mail('testingmportertesting@gmail.com', 'hello, this is testing!')
     rv_obj = json.loads(rv)
 
-    assert id in rv_obj
+    assert 'id' in rv_obj
 
 
 def test_send_mail_driver(session):
