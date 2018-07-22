@@ -13,6 +13,7 @@ class DevConfig(object):
     BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD
     BASIC_AUTH_FORCE = BASIC_AUTH_FORCE
     BASIC_AUTH_REALM = BASIC_AUTH_REALM
+    TESTING = False
 
 # _db = SQLAlchemy()
 
@@ -26,7 +27,9 @@ def create_app(config=None):
 
     app = Flask(__name__, instance_relative_config=True)
 
-    basic_auth = BasicAuth(app)
+    # basic auth only in deployment
+    if not app.config['TESTING']:
+        basic_auth = BasicAuth(app)
 
     if config is None:
         # load the instance config, if it exists, when not testing
