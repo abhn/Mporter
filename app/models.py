@@ -36,6 +36,7 @@ class Mentees(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     mentee_name = db.Column(db.String(64), unique=True, nullable=False)
+    mentee_email = db.Column(db.String(256), nullable=True)
 
     mentor = db.relationship("Mentors", secondary=mentor_mentee)
 
