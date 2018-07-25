@@ -1,1 +1,134 @@
-<h3>hello world</h3>
+<!DOCTYPE HTML>
+<!--
+	Prism by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Mporter</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="{{ url_for('static', filename='assets/js/ie/html5shiv.js') }}"></script><![endif]-->
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie9.css') }}" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner split">
+					<section>
+                        <h2>Welcome to Mporter</h2>
+                        <p>A free web application to help you regularly report your progress to your mentors</p>
+					</section>
+					<section>
+                        <p>To find out more about <span style="color: rgba(255, 255, 255, 1.0)">Mporter</span> and see if it fits your needs, give it a try.</p>
+						<ul class="actions">
+							<li><a href="/register" class="button special">Get started</a></li>
+							<li><a href="/login" class="button">Login</a></li>
+						</ul>
+					</section>
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="wrapper">
+				<div class="inner split">
+					<section>
+						<h2>Mentors Are Important</h2>
+						<p>
+							And for the right mentorship to happen, it is essential that the mentor knows what the mentee is up to and provide feedback. <b>Mporter</b> aims at reducing the mental friction of having to manually spend time to curate the tasks done, putting them down in an email/message and sending them at a particular interval of the day.
+                        </p>
+						<!--<ul class="actions">-->
+							<!--<li><a href="#" class="button alt">Learn more</a></li>-->
+						<!--</ul>-->
+					</section>
+					<section>
+						<h3>Why Mporter?</h3>
+						<ul class="checklist">
+							<li>Free and open source software</li>
+							<li>Private, secure and 100% customisable</li>
+							<li>Easy to use, get started in minutes</li>
+							<li>Customize various parameters of reporting</li>
+							<li>User management system for multi-mentee use</li>
+						</ul>
+					</section>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2 alt">
+				<div class="inner">
+					<div class="spotlight">
+						<div class="image">
+							<img src="{{ url_for('static', filename='images/mentor.jpg') }}" alt="" />
+						</div>
+						<div class="content">
+							<h3>Self-host Mporter</h3>
+							<p>If you'd like to run Mporter on your own private server, or at home on your computer, you can do that too! It's open source. Instructions on <a href="https://github.com/abhn/Mporter">Github</a></p>
+							<ul class="actions">
+								<li><a href="https://github.com/abhn/Mporter/archive/master.zip" class="button alt">Download Here</a></li>
+							</ul>
+						</div>
+					</div>
+					<!--<div class="spotlight">-->
+						<!--<div class="image">-->
+							<!--<img src="{{ url_for('static', filename='images/pic02.jpg') }}" alt="" />-->
+						<!--</div>-->
+						<!--<div class="content">-->
+							<!--<h3>Magna consequat felis</h3>-->
+							<!--<p>Lorem ipsum nisl sed cursus magna et amet veroeros. Sed phasellus malesuada quis orci. Pellentesque eget consequat.</p>-->
+							<!--<ul class="actions">-->
+								<!--<li><a href="#" class="button alt">Details</a></li>-->
+							<!--</ul>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="spotlight">-->
+						<!--<div class="image">-->
+							<!--<img src="{{ url_for('static', filename='images/pic03.jpg') }}" alt="" />-->
+						<!--</div>-->
+						<!--<div class="content">-->
+							<!--<h3>Vitae placerat adipiscing</h3>-->
+							<!--<p>Lorem ipsum nisl sed cursus magna et amet veroeros. Sed phasellus malesuada quis orci. Pellentesque eget consequat.</p>-->
+							<!--<ul class="actions">-->
+								<!--<li><a href="#" class="button alt">Details</a></li>-->
+							<!--</ul>-->
+						<!--</div>-->
+					<!--</div>-->
+				</div>
+			</section>
+
+		<!-- Contact -->
+			<section id="contact" class="wrapper">
+				<div class="inner split">
+					<section>
+						<h2>Mporter</h2>
+						<p>An MIT licensed free web application to help you regularly report your progress to your mentors.</p>
+					</section>
+					<section>
+						<ul class="contact">
+							<li class="fa-github">Project: <a href="https://github.com/abhn/Mporter">github.com/abhn/Mporter</a></li>
+							<li class="fa-smile-o">Author: <a href="https://www.nagekar.com">Abhishek Nagekar</a></li>
+							<li class="fa-rss">Website: <a href="https://mporter.co">mporter.co</a></li>
+						</ul>
+					</section>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="copyright">
+					&copy; 2018, Abhishek Nagekar. Some rights reserved. Images: <a href="http://unsplash.com">Unsplash</a>. Design: <a href="http://templated.co">TEMPLATED</a>.
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/skel.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js') }}"></script><![endif]-->
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+	</body>
+</html>
