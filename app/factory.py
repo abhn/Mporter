@@ -25,7 +25,7 @@ def create_app(config=None):
     :return: Flask app instance
     """
 
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='../static')
 
     # basic auth only in deployment
     if not app.config['TESTING']:
