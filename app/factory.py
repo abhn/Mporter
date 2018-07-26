@@ -15,6 +15,7 @@ class DevConfig(object):
     BASIC_AUTH_REALM = BASIC_AUTH_REALM
     SECURITY_PASSWORD_SALT = 'unique_salt_3315'
     SECURITY_REGISTERABLE = True
+    SECURITY_SEND_REGISTER_EMAIL = False
     TESTING = False
 
 # _db = SQLAlchemy()

@@ -34,6 +34,7 @@ def db_config(app):
     admin.add_view(ModelView(Tasks, db.session))
     admin.add_view(ModelView(Mentors, db.session))
     admin.add_view(ModelView(Mentees, db.session))
+    admin.add_view(ModelView(User, db.session))
 
     # create all the models
     db.create_all()

@@ -84,8 +84,9 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
 
-    # @validates('email')
-    # def update_mentee(self, key, value):
-    #     mentee = Mentees(mentee_email=self.email)
-    #     db.session.add(mentee)
-    #     db.session.commit()
+    # create a mentee account with the same email as our flask-security user
+    @validates('email')
+    def update_mentee(self, key, value):
+        mentee = Mentees(mentee_email=value, mentee_name=value)
+        db.session.add(mentee)
+        db.session.commit()
