@@ -19,6 +19,7 @@ class TestConfig(object):
     ENV = 'test'
     TESTING = True
     SQLALCHEMY_DATABASE_URI = DB_URL_TEST
+    SECURITY_PASSWORD_SALT = 'unique_salt_3315'
 
 
 @pytest.fixture(scope='session')

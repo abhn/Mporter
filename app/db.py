@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin.contrib.sqla import ModelView
 from flask_migrate import Migrate
 from flask_admin import Admin
-from flask_basicauth import BasicAuth
+from flask_security import Security, SQLAlchemyUserDatastore, login_required
 
 _db = SQLAlchemy()
 
@@ -20,6 +20,11 @@ def db_config(app):
     global _db
     _db = db
     migrate = Migrate(app, db)
+
+    # Setup Flask-Security
+    from .models import User, Role
+    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+    security = Security(app, user_datastore)
 
     # now import models to prevent cylic import errors,
     # there has to be a better way to do this, sigh.
