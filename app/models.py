@@ -37,13 +37,13 @@ class Mentees(db.Model):
     __tablename__ = 'mentees'
 
     id = db.Column(db.Integer, primary_key=True)
-    mentee_name = db.Column(db.String(64), unique=True, nullable=False)
-    mentee_email = db.Column(db.String(256), nullable=True)
+    mentee_email = db.Column(db.String(256), unique=True, nullable=False)
+    mentee_name = db.Column(db.String(64), nullable=True)
 
     mentor = db.relationship("Mentors", secondary=mentor_mentee)
 
     def __repr__(self):
-        return '<Mentee {}>'.format(self.mentee_name)
+        return '<Mentee {}>'.format(self.mentee_email)
 
 
 class Tasks(db.Model):
@@ -83,3 +83,9 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+
+    # @validates('email')
+    # def update_mentee(self, key, value):
+    #     mentee = Mentees(mentee_email=self.email)
+    #     db.session.add(mentee)
+    #     db.session.commit()
