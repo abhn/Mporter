@@ -1,6 +1,4 @@
-from .app_config import DB_URL, SECRET_KEY, CELERY_BROKER_URL, \
-    BASIC_AUTH_FORCE, BASIC_AUTH_PASSWORD, BASIC_AUTH_REALM, BASIC_AUTH_USERNAME
-from flask_basicauth import BasicAuth
+from .app_config import DB_URL, SECRET_KEY, CELERY_BROKER_URL
 from flask import Flask
 
 
@@ -9,10 +7,6 @@ class DevConfig(object):
     SQLALCHEMY_DATABASE_URI = DB_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CELERY_BROKER_URL = CELERY_BROKER_URL
-    BASIC_AUTH_USERNAME = BASIC_AUTH_USERNAME
-    BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD
-    BASIC_AUTH_FORCE = BASIC_AUTH_FORCE
-    BASIC_AUTH_REALM = BASIC_AUTH_REALM
     SECURITY_PASSWORD_SALT = 'unique_salt_3315'
     SECURITY_REGISTERABLE = True
     SECURITY_SEND_REGISTER_EMAIL = False
@@ -30,10 +24,6 @@ def create_app(config=None):
     """
 
     app = Flask(__name__, instance_relative_config=True, static_folder='../static')
-
-    # basic auth only in deployment
-    # if not app.config['TESTING']:
-    #     basic_auth = BasicAuth(app)
 
     if config is None:
         # load the instance config, if it exists, when not testing

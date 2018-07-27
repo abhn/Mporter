@@ -20,6 +20,9 @@ class TestConfig(object):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = DB_URL_TEST
     SECURITY_PASSWORD_SALT = 'unique_salt_3315'
+    SECURITY_REGISTERABLE = True
+    SECURITY_SEND_REGISTER_EMAIL = False
+    SECURITY_POST_LOGIN_VIEW = '/mentee'
 
 
 @pytest.fixture(scope='session')
@@ -70,8 +73,8 @@ def session(db):
 def test_admin_landing(testapp):
     """test if landing page works"""
 
-    rv = testapp.get('/admin/')
-    assert rv.status == '200 OK'
+    rv = testapp.get('/admin/mentees/')
+    assert rv.status == '401 Unauthorized'
 
 
 def test_db_instance_of_sqlalchemy(db):
