@@ -16,6 +16,7 @@ class DevConfig(object):
     SECURITY_PASSWORD_SALT = 'unique_salt_3315'
     SECURITY_REGISTERABLE = True
     SECURITY_SEND_REGISTER_EMAIL = False
+    SECURITY_POST_LOGIN_VIEW = '/mentee'
     TESTING = False
 
 # _db = SQLAlchemy()
