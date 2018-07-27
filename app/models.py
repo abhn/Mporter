@@ -90,3 +90,11 @@ class User(db.Model, UserMixin):
         mentee = Mentees(mentee_email=value, mentee_name=value)
         db.session.add(mentee)
         db.session.commit()
+        return value
+
+    def get_security_payload(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'roles': self.roles
+        }
