@@ -3,7 +3,8 @@ from os import environ
 from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
 from .factory import create_app
 from .db import db_config
-from flask_security import Security, SQLAlchemyUserDatastore, login_required, roles_required, utils, current_user, UserMixin
+from flask_security import Security, SQLAlchemyUserDatastore, login_required, roles_required, current_user, UserMixin
+from flask_security.utils import hash_password
 
 app = create_app()
 db_init = db_config(app)
@@ -23,19 +24,19 @@ def before_first_request():
     user_datastore = SQLAlchemyUserDatastore(db_init, User, Role)
     _security = Security(app, user_datastore)
 
-    # # create admin and normal user roles
-    # user_datastore.find_or_create_role(name='admin', description='Administrator')
-    # user_datastore.find_or_create_role(name='user', description='End user')
-    #
-    # # create an admin user and add to database
-    # encrypted_password = 'password'
-    # if not user_datastore.get_user('admin4@test.com'):
-    #     user_datastore.create_user(email='admin4@test.com', password=encrypted_password)
-    #
-    # db_init.session.commit()
-    #
-    # # make admin@test.com the admin user
-    # user_datastore.add_role_to_user('admin4@test.com', 'admin')
+    # create admin and normal user roles
+    user_datastore.find_or_create_role(name='admin', description='Administrator')
+    user_datastore.find_or_create_role(name='user', description='End user')
+
+    # create an admin user and add to database
+    encrypted_password = hash_password('password')
+    if not user_datastore.get_user('admin@mporter.co'):
+        user_datastore.create_user(email='admin@mporter.co', password=encrypted_password)
+
+    db_init.session.commit()
+
+    # make admin@test.com the admin user
+    user_datastore.add_role_to_user('admin4@test.com', 'admin')
     db_init.session.commit()
 
 

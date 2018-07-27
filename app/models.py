@@ -87,9 +87,13 @@ class User(db.Model, UserMixin):
     # create a mentee account with the same email as our flask-security user
     @validates('email')
     def update_mentee(self, key, value):
-        mentee = Mentees(mentee_email=value, mentee_name=value)
-        db.session.add(mentee)
-        db.session.commit()
+        alread_present = Mentees.query.filter_by(mentee_email=value).all()
+        if alread_present:
+            pass
+        else:
+            mentee = Mentees(mentee_email=value, mentee_name=value)
+            db.session.add(mentee)
+            db.session.commit()
         return value
 
     def get_security_payload(self):

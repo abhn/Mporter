@@ -2,9 +2,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_admin.contrib.sqla import ModelView
 from flask_migrate import Migrate
 from flask_admin import Admin
-from flask_security import Security, SQLAlchemyUserDatastore, login_required, roles_required, utils
+from flask_security import current_user
 
 _db = SQLAlchemy()
+
+
+# Customized Role model for SQL-Admin
+class SecureAdmin(ModelView):
+
+    # Prevent administration of Roles unless the currently logged-in user has the "admin" role
+    def is_accessible(self):
+        return current_user.has_role('admin')
 
 
 def db_config(app):
@@ -28,11 +36,11 @@ def db_config(app):
     from .models import User, Role
 
     # add the admin panel views
-    admin.add_view(ModelView(Tasks, db.session))
-    admin.add_view(ModelView(Mentors, db.session))
-    admin.add_view(ModelView(Mentees, db.session))
-    admin.add_view(ModelView(User, db.session))
-    admin.add_view(ModelView(Role, db.session))
+    admin.add_view(SecureAdmin(Tasks, db.session))
+    admin.add_view(SecureAdmin(Mentors, db.session))
+    admin.add_view(SecureAdmin(Mentees, db.session))
+    admin.add_view(SecureAdmin(User, db.session))
+    admin.add_view(SecureAdmin(Role, db.session))
 
     # create all the models
     db.create_all()
