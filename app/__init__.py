@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request, url_for, redirect
 from os import environ
 from .app_config import SEND_MAIL_HOUR, CELERY_BROKER_URL, DB_URL, SECRET_KEY
 from .factory import create_app
@@ -51,12 +51,34 @@ def mentee():
     current_user_id = current_user.get_id()
     user = user_datastore.get_user(current_user_id)
 
+    from .models import Tasks
+
+    user_tasks = Tasks.query.filter_by(mentee_id=user.id).all()
+
     user_obj = {
         'user_id': user.id,
-        'user_email': user.email
+        'user_email': user.email,
+        'user_tasks': user_tasks
     }
 
     return render_template('mentee.html', user=user_obj)
+
+
+@app.route('/new-task', methods=['POST'])
+@login_required
+def new_task():
+    task = request.form.get('task')
+    current_user_id = current_user.get_id()
+    user = user_datastore.get_user(current_user_id)
+
+    from .models import Tasks
+
+    task = Tasks(mentee_id=user.id, task=task)
+
+    db_init.session.add(task)
+    db_init.session.commit()
+
+    return redirect(url_for('mentee'))
 
 
 if __name__ == '__main__':

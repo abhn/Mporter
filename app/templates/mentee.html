@@ -2,12 +2,26 @@
 
 <html>
 <head>
-    <title>Hello {{ user }} | Welcome to Mporter</title>
+    <title>Hello {{ user.user_email }} | Welcome to Mporter</title>
 </head>
 
 <body>
 
-    <h3>Hello {{ user }}</h3>
+    <h3>Hello {{ user.user_email }}</h3>
+
+    <p>Here are your today's tasks</p>
+    <ol>
+        {% for task in user.user_tasks %}
+            <li>{{ task.task }}</li>
+        {% endfor %}
+    </ol>
+
+    <p>Add new task</p>
+
+    <form action="/new-task" method="post">
+        <input name="task" type="text" id="input-task" placeholder="input new task"/>
+        <input name="submit" type="submit"/>
+    </form>
 
 </body>
 
