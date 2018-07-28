@@ -1,6 +1,8 @@
 from .db import _db as db
 from sqlalchemy.orm import validates
 # from sqlalchemy.ext.declarative import declarative_base
+from flask_security import UserMixin, RoleMixin
+
 
 mentor_mentee = db.Table(
     'mentor_mentee',
@@ -35,13 +37,13 @@ class Mentees(db.Model):
     __tablename__ = 'mentees'
 
     id = db.Column(db.Integer, primary_key=True)
-    mentee_name = db.Column(db.String(64), unique=True, nullable=False)
-    mentee_email = db.Column(db.String(256), nullable=True)
+    mentee_email = db.Column(db.String(256), unique=True, nullable=False)
+    mentee_name = db.Column(db.String(64), nullable=True)
 
     mentor = db.relationship("Mentors", secondary=mentor_mentee)
 
     def __repr__(self):
-        return '<Mentee {}>'.format(self.mentee_name)
+        return '<Mentee {}>'.format(self.mentee_email)
 
 
 class Tasks(db.Model):
@@ -59,3 +61,44 @@ class Tasks(db.Model):
 
     def __repr__(self):
         return '<Task {}>'.format(self.task)
+
+
+# Flask-Security
+
+roles_users = db.Table('roles_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+
+class Role(db.Model, RoleMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean())
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+
+    # create a mentee account with the same email as our flask-security user
+    @validates('email')
+    def update_mentee(self, key, value):
+        alread_present = Mentees.query.filter_by(mentee_email=value).all()
+        if alread_present:
+            pass
+        else:
+            mentee = Mentees(mentee_email=value, mentee_name=value)
+            db.session.add(mentee)
+            db.session.commit()
+        return value
+
+    def get_security_payload(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'roles': self.roles
+        }

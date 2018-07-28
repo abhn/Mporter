@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Hello {{ user.user_email }} | Welcome to Mporter</title>
+</head>
+
+<body>
+
+    <h1>Hello {{ user.user_email }}</h1>
+
+    <hr/>
+
+    <h3>Today's Tasks</h3>
+    <ol>
+        {% for task in user.user_tasks %}
+            <li>{{ task.task }}</li>
+        {% endfor %}
+    </ol>
+
+    <h3>Add New Task</h3>
+
+    <form action="/new-task" method="post">
+        <input name="task" type="text" id="input-task" placeholder="input new task" required/>
+        <input name="submit" type="submit" value="Add Task"/>
+    </form>
+
+    <br/>
+    <hr/>
+
+    <h3>Your Mentors</h3>
+
+    <ol>
+        {% for mentor in user.user_mentors %}
+            <li>{{ mentor.mentor_name }} ({{ mentor.mentor_email }})</li>
+        {% endfor %}
+    </ol>
+
+    <h3>Add New Mentor</h3>
+
+    <form action="/new-mentor" method="post">
+        <input name="mentor-name" type="text" id="input-mentor-name" placeholder="input mentor's name" required/>
+        <input name="mentor-email" type="email" id="input-mentor-email" placeholder="input mentor's email" required/>
+        <input name="submit" type="submit" value="Add Mentor"/>
+    </form>
+
+    <br/>
+    <hr/>
+
+    <a href="/logout">Logout</a>
+    {% if user.is_admin %}
+        | <a href="/admin">Admin</a>
+    {% endif %}
+</body>
+
+</html>
