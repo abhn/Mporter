@@ -9,6 +9,7 @@ from celery import Celery
 from utils import  get_env_var
 from app.utils import send_mail, send_email_driver
 import json
+from flask_security import Security, SQLAlchemyUserDatastore
 
 from app.models import Tasks, Mentees, Mentors
 
@@ -28,7 +29,14 @@ class TestConfig(object):
 @pytest.fixture(scope='session')
 def app():
     _app = create_app(TestConfig)
-    db_config(_app)
+    db_init = db_config(_app)
+    #
+    # # Setup Flask-Security
+    # from app.models import User, Role
+    #
+    # user_datastore = SQLAlchemyUserDatastore(db_init, User, Role)
+    # _security = Security(app, user_datastore)
+
     ctx = _app.app_context()
     ctx.push()
 
@@ -70,11 +78,11 @@ def session(db):
     session.remove()
 
 
-def test_admin_landing(testapp):
-    """test if landing page works"""
-
-    rv = testapp.get('/admin/mentees/')
-    assert rv.status == '401 Unauthorized'
+# def test_admin_landing(testapp):
+#     """test if landing page works"""
+#
+#     rv = testapp.get('/admin/mentees/')
+#     assert rv.status == '401 Unauthorized'
 
 
 def test_db_instance_of_sqlalchemy(db):
