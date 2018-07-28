@@ -47,7 +47,10 @@
     <br/>
     <hr/>
 
-    <a href="/logout">Logout</a>
+    <a href="/logout">[ Logout ]</a>
+    {% if user.is_admin %}
+        | <a href="/admin">[ Admin ]</a>
+    {% endif %}
 </body>
 
 </html>

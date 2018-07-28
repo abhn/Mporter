@@ -44,6 +44,10 @@ def mentee():
     current_user_id = current_user.get_id()
     user = user_datastore.get_user(current_user_id)
 
+    is_admin = False
+    if len(user.roles) > 0:
+        is_admin = True if user.roles[0].name == 'admin' else False
+
     from .models import Tasks, Mentees
 
     user_tasks = Tasks.query.filter_by(mentee_id=user.id).all()
@@ -53,7 +57,8 @@ def mentee():
         'user_id': user.id,
         'user_email': user.email,
         'user_tasks': user_tasks,
-        'user_mentors': mentee_obj.mentor
+        'user_mentors': mentee_obj.mentor,
+        'is_admin': is_admin
     }
 
     return render_template('mentee.html', user=user_obj)
