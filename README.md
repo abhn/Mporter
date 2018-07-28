@@ -2,16 +2,15 @@
 
 <p align="center">
     <img src="https://imgur.com/zc455hVl.png"/>
+</p>
 
-<p>Try it out here: <a href="https://mporter.co">https://mporter.co</a></p>
+*Try it out here: [https://mporter.co](https://mporter.co)*
 
 [![Build Status](https://travis-ci.org/abhn/Mporter.svg?branch=master)](https://travis-ci.org/abhn/Mporter)
 [![codecov](https://codecov.io/gh/abhn/Mporter/branch/master/graph/badge.svg?token=fofAGeN2Od)](https://codecov.io/gh/abhn/Mporter) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. 
-</p>
-
 
 ### Demo
 - [https://mporter.co](https://mporter.co)
@@ -25,10 +24,15 @@ Yes, think of it like Twitter but with a twist. Instead of you getting the tweet
 
 ### Screenshots
 ![user portal](https://imgur.com/dG0yFkgl.png)
+
 Normal user's home (all same except for the admin button)
+
 ![admin portal](https://imgur.com/Ct2zJU9l.png)
+
 Admin user's home (notice the admin button at the bottom)
+
 ![admin panel](https://imgur.com/e1F6Hn4l.png)
+
 Admin section accessible to only admin users
 
 
@@ -37,7 +41,7 @@ Admin section accessible to only admin users
 - **Login & Register** support for creation and authentication of Mentee accounts.
 - **Admin panel** for easy administration of users, tasks etc.
 - **Admin roles** are set up to limit the access of admin panel to few people. 
-- Clutter free UI, easy to use, fully open source and tracking free.
+- Clutter free UI, easy to use, fully open source.
 
 
 ### Vocabulary
