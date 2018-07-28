@@ -1,6 +1,8 @@
 ## Mporter (Mentor Reporter)
 
-![project home](https://imgur.com/zc455hVl.png)
+<p align="center">
+    <img src="https://imgur.com/zc455hVl.png"/>
+
 *Try it out here: [https://mporter.co](https://mporter.co)*
 
 [![Build Status](https://travis-ci.org/abhn/Mporter.svg?branch=master)](https://travis-ci.org/abhn/Mporter)
@@ -8,6 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. 
+</p>
 
 
 ### Demo
