@@ -68,18 +68,19 @@ Following are the steps needed to put this app on [Heroku](https://heroku.com) w
     `$ heroku config:set VAR_NAME=var_value`
     You'll be able to use this variable in your app as `import os; os.environ.get('VAR_NAME')`. Do that for each variable in the list below. For example, `$ heroku config:set MPORTER_SECRET='abcd123'` and so on.
 9. Set the following env variables. I have created a corresponding `env.sh` file locally and added it to my `.gitignore` to not pollute my `~/.bashrc`:
-```bash
-#!/usr/bin/env bash
-
-export FLASK_APP=app
-export MPORTER_SECRET=<some random>
-export CELERY_BROKER_URL=<the rabbitmq bigwig url>
-export MAILGUN_KEY=<mailgun key>
-export MAILGUN_SANDBOX=<mailgun sandboxurl>
-export SQLALCHEMY_DATABASE_URI=<first heroku data addon's url>
-export SQLALCHEMY_DATABASE_URI_TEST=<second heroku data addon's url>
-
-```
+    ```bash
+    #!/usr/bin/env bash
+    
+    export FLASK_APP=app
+    export MPORTER_SECRET=<some random>
+    export CELERY_BROKER_URL=<the rabbitmq bigwig url>
+    export MAILGUN_KEY=<mailgun key>
+    export MAILGUN_SANDBOX=<mailgun sandboxurl>
+    export SQLALCHEMY_DATABASE_URI=<first heroku data addon's url>
+    export SQLALCHEMY_DATABASE_URI_TEST=<second heroku data addon's url>
+    
+    ```
+10. Click the `deploy manually` button again, and your app should (hopefully) be live. 
 
 ### Ingredients
 - [Flask-Admin](https://github.com/flask-admin/flask-admin) for the read to use admin pages like those Django gives you.
