@@ -7,22 +7,44 @@
 
 <body>
 
-    <h3>Hello {{ user.user_email }}</h3>
+    <h1>Hello {{ user.user_email }}</h1>
 
-    <p>Here are your today's tasks</p>
+    <hr/>
+
+    <h3>Today's Tasks</h3>
     <ol>
         {% for task in user.user_tasks %}
             <li>{{ task.task }}</li>
         {% endfor %}
     </ol>
 
-    <p>Add new task</p>
+    <h3>Add New Task</h3>
 
     <form action="/new-task" method="post">
-        <input name="task" type="text" id="input-task" placeholder="input new task"/>
-        <input name="submit" type="submit"/>
+        <input name="task" type="text" id="input-task" placeholder="input new task" required/>
+        <input name="submit" type="submit" value="Add Task"/>
     </form>
 
+    <br/>
+    <hr/>
+
+    <h3>Your Mentors</h3>
+
+    <ol>
+        {% for mentor in user.user_mentors %}
+            <li>{{ mentor.mentor_name }} ({{ mentor.mentor_email }})</li>
+        {% endfor %}
+    </ol>
+
+    <h3>Add New Mentor</h3>
+
+    <form action="/new-mentor" method="post">
+        <input name="mentor-name" type="text" id="input-mentor-name" placeholder="input mentor's name" required/>
+        <input name="mentor-email" type="email" id="input-mentor-email" placeholder="input mentor's email" required/>
+        <input name="submit" type="submit" value="Add Mentor"/>
+    </form>
+
+    <br/>
     <hr/>
 
     <a href="/logout">Logout</a>
