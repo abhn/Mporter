@@ -26,17 +26,17 @@ Yes, think of it like Twitter but with a twist. Instead of you getting the tweet
 
 <div style="background-color: #333; padding: 10px">
 
-    <img src="https://imgur.com/dG0yFkgl.png"/>
-    
-    Normal user's home (all same except for the admin button)
-    
-    <img src="https://imgur.com/Ct2zJU9l.png"/>
-    
-    Admin user's home (notice the admin button at the bottom)
-    
-    <img src="https://imgur.com/e1F6Hn4l.png"/>
-    
-    Admin section accessible to only admin users
+<img src="https://imgur.com/dG0yFkgl.png"/>
+
+Normal user's home (all same except for the admin button)
+
+<img src="https://imgur.com/Ct2zJU9l.png"/>
+
+Admin user's home (notice the admin button at the bottom)
+
+<img src="https://imgur.com/e1F6Hn4l.png"/>
+
+Admin section accessible to only admin users
 
 </div>
 
