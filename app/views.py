@@ -2,6 +2,7 @@ from flask_security import login_required, current_user
 from flask import render_template, request, url_for, redirect
 from app import user_datastore, app, db_init
 from flask_security.utils import hash_password
+from datetime import datetime, timedelta
 
 
 @app.before_first_request
@@ -50,7 +51,12 @@ def mentee():
 
     from .models import Tasks, Mentees
 
-    user_tasks = Tasks.query.filter_by(mentee_id=user.id).all()
+    user_tasks = Tasks\
+        .query\
+        .filter_by(mentee_id=user.id) \
+        .filter(Tasks.at_created >= datetime.today() - timedelta(days=1))\
+        .all()
+
     mentee_obj = Mentees.query.filter_by(id=user.id).first()
 
     user_obj = {
