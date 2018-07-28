@@ -23,18 +23,22 @@ With **Mporter**, you just have to keep adding your *tasks* (things that you did
 Yes, think of it like Twitter but with a twist. Instead of you getting the tweets of people you add, the people you add get your tweets (Tasks) instead.
 
 ### Screenshots
-![user portal](https://imgur.com/dG0yFkgl.png)
 
-Normal user's home (all same except for the admin button)
+<div style="background-color: #333; padding: 10px">
 
-![admin portal](https://imgur.com/Ct2zJU9l.png)
+    <img src="https://imgur.com/dG0yFkgl.png"/>
+    
+    Normal user's home (all same except for the admin button)
+    
+    <img src="https://imgur.com/Ct2zJU9l.png"/>
+    
+    Admin user's home (notice the admin button at the bottom)
+    
+    <img src="https://imgur.com/e1F6Hn4l.png"/>
+    
+    Admin section accessible to only admin users
 
-Admin user's home (notice the admin button at the bottom)
-
-![admin panel](https://imgur.com/e1F6Hn4l.png)
-
-Admin section accessible to only admin users
-
+</div>
 
 ### Features
 - **Multiple Mentee-Mentor support**. You can use one instance with your friends with overlap of Mentors in between the Mentees.
