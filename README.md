@@ -3,7 +3,7 @@
 <p align="center">
     <img src="https://imgur.com/zc455hVl.png"/>
 
-*Try it out here: [https://mporter.co](https://mporter.co)*
+<p>Try it out here: <a href="https://mporter.co">https://mporter.co</a></p>
 
 [![Build Status](https://travis-ci.org/abhn/Mporter.svg?branch=master)](https://travis-ci.org/abhn/Mporter)
 [![codecov](https://codecov.io/gh/abhn/Mporter/branch/master/graph/badge.svg?token=fofAGeN2Od)](https://codecov.io/gh/abhn/Mporter) 
