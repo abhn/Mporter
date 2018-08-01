@@ -2,6 +2,7 @@ from .db import _db as db
 from sqlalchemy.orm import validates
 # from sqlalchemy.ext.declarative import declarative_base
 from flask_security import UserMixin, RoleMixin
+from werkzeug.exceptions import NotFound
 
 
 mentor_mentee = db.Table(
@@ -41,6 +42,8 @@ class Mentees(db.Model):
     mentee_name = db.Column(db.String(64), nullable=True)
 
     mentor = db.relationship("Mentors", secondary=mentor_mentee)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Mentee {}>'.format(self.mentee_email)
@@ -87,13 +90,15 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
 
+    mentee = db.relationship("Mentees", backref=db.backref("users", uselist=False))
+
     # create a mentee account with the same email as our flask-security user
     @validates('email')
     def update_mentee(self, key, value):
-        alread_present = Mentees.query.filter_by(mentee_email=value).all()
-        if alread_present:
-            pass
-        else:
+        # Easier to ask forgiveness than permission (EAFP)
+        try:
+            Mentees.query.filter_by(mentee_email=value).first_or_404()
+        except NotFound:
             mentee = Mentees(mentee_email=value, mentee_name=value)
             db.session.add(mentee)
             db.session.commit()
