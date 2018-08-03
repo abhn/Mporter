@@ -27,17 +27,27 @@ def get_mentee_mentors(user_id):
 def get_mentee_data(current_user_id):
     """curate data used by /mentee view"""
 
+    from .models import Mentees
+
     user = user_datastore.get_user(current_user_id)
 
-    is_admin = False
-    if len(user.roles) > 0:
+    # in case no user currently logged in, fetch user from mentee model
+    if user is None:
+        user = Mentees.query.filter_by(id=current_user_id).first()
+        user_email = user.mentee_email
+    else:
+        user_email = user.email
+
+    try:
         is_admin = True if user.roles[0].name == 'admin' else False
+    except AttributeError:
+        is_admin = False
 
     user_tasks = get_mentee_tasks(current_user_id)
 
     user_obj = {
         'user_id': user.id,
-        'user_email': user.email,
+        'user_email': user_email,
         'user_tasks': user_tasks,
         'user_mentors': get_mentee_mentors(current_user_id),
         'is_admin': is_admin

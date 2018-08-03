@@ -78,13 +78,17 @@ def session(db):
     session.remove()
 
 
-def test_get_mentee_data(testapp):
-    """test get_mentee_data service returns admin user a/c for user id 1"""
+def test_get_mentee_data(session):
+    """test get_mentee_data service returns data for newely created mentee"""
 
-    data = get_mentee_data(1)
-    assert data['is_admin']
-    assert data['user_email'] == 'admin@mporter.co'
-    assert data['user_id'] == 1
+    mentee1 = Mentees(mentee_email='test123mentee.com', mentee_name='test123')
+    session.add(mentee1)
+    session.commit()
+
+    data = get_mentee_data(mentee1.id)
+
+    assert data['user_email'] == 'test123mentee.com'
+    assert data['user_id'] == mentee1.id
 
 
 def test_add_task(session):
@@ -97,8 +101,8 @@ def test_add_task(session):
     session.add(mentee1)
     session.commit()
 
-    add_task(1, 'hello. random: ' + str(random()))
-    mentee_tasks = get_mentee_tasks(1)
+    add_task(mentee1.id, 'hello. random: ' + str(random()))
+    mentee_tasks = get_mentee_tasks(mentee1.id)
 
     assert len(mentee_tasks) == 1
     assert 'hello. random' in mentee_tasks[0].task
