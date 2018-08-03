@@ -9,7 +9,7 @@ from celery import Celery
 from utils import  get_env_var
 from app.utils import send_mail, send_email_driver
 import json
-from flask_security import Security, SQLAlchemyUserDatastore
+from app.services import get_mentee_data, add_mentor, add_task, get_mentee_tasks, get_mentee_mentors
 
 from app.models import Tasks, Mentees, Mentors
 
@@ -78,11 +78,51 @@ def session(db):
     session.remove()
 
 
-# def test_admin_landing(testapp):
-#     """test if landing page works"""
-#
-#     rv = testapp.get('/admin/mentees/')
-#     assert rv.status == '401 Unauthorized'
+def test_get_mentee_data(session):
+    """test get_mentee_data service returns data for newely created mentee"""
+
+    mentee1 = Mentees(mentee_email='test123mentee.com', mentee_name='test123')
+    session.add(mentee1)
+    session.commit()
+
+    data = get_mentee_data(mentee1.id)
+
+    assert data['user_email'] == 'test123mentee.com'
+    assert data['user_id'] == mentee1.id
+
+
+def test_add_task(session):
+    """test if tasks are addable via service"""
+
+    from random import random
+    from app.models import Mentees
+
+    mentee1 = Mentees(mentee_email='test123mentee.com')
+    session.add(mentee1)
+    session.commit()
+
+    add_task(mentee1.id, 'hello. random: ' + str(random()))
+    mentee_tasks = get_mentee_tasks(mentee1.id)
+
+    assert len(mentee_tasks) == 1
+    assert 'hello. random' in mentee_tasks[0].task
+
+
+def test_add_mentor(session):
+    """test if mentee is able to add mentors via service"""
+
+    mentee1 = Mentees(mentee_email='test123mentee.com')
+
+    session.add(mentee1)
+    session.commit()
+
+    add_mentor('test mentor', 'mentor@testmentor.com', mentee1.id)
+
+    mentee_mentors = get_mentee_mentors(mentee1.id)
+
+    assert len(mentee_mentors) == 1
+    assert mentee_mentors[0].mentor_name == 'test mentor'
+    assert mentee_mentors[0].mentor_email == 'mentor@testmentor.com'
 
 
 def test_db_instance_of_sqlalchemy(db):
