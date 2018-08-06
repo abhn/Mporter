@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse
 from flask_security import current_user, auth_token_required
 from flask_security.utils import verify_password
 from sqlalchemy.exc import SQLAlchemyError
+from flask_restful import Api
 
 
 class MporterAPIAuth(Resource):
@@ -101,3 +102,11 @@ class MporterAPIMentor(Resource):
             return {'success': True}, 201
         except SQLAlchemyError:
             return {'success': False}, 500
+
+
+def api_init(app):
+    api = Api(app)
+
+    api.add_resource(MporterAPIAuth, '/api/auth')
+    api.add_resource(MporterAPITask, '/api/task')
+    api.add_resource(MporterAPIMentor, '/api/mentor')
