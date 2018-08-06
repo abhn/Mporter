@@ -47,11 +47,6 @@ def app():
 
 
 @pytest.fixture(scope='session')
-def testapp(app):
-    return app.test_client()
-
-
-@pytest.fixture(scope='session')
 def db(app):
     _db.app = app
     _db.create_all()
@@ -77,6 +72,11 @@ def session(db):
     transaction.rollback()
     connection.close()
     session.remove()
+
+
+@pytest.fixture(scope='session')
+def testapp(app):
+    return app.test_client()
 
 
 def test_get_mentee_data(session):
