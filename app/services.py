@@ -1,5 +1,6 @@
 from app import user_datastore, db_init
 from datetime import datetime, timedelta
+from sqlalchemy.exc import SQLAlchemyError
 
 
 def get_mentee_tasks(user_id):
@@ -17,6 +18,8 @@ def get_mentee_tasks(user_id):
 
 
 def get_mentee_tasks_dict(user_id):
+    """return tasks as a list of dicts"""
+
     tasks = get_mentee_tasks(user_id)
 
     obj = []
@@ -35,6 +38,7 @@ def get_mentee_mentors(user_id):
 
 
 def get_mentee_mentors_dict(user_id):
+    """return mentors as a list of dicts"""
 
     mentors = get_mentee_mentors(user_id)
 
@@ -82,23 +86,35 @@ def add_task(current_user_id, task):
 
     from .models import Tasks
 
-    task = Tasks(mentee_id=current_user_id, task=task)
+    try:
+        task = Tasks(mentee_id=current_user_id, task=task)
+        db_init.session.add(task)
+        db_init.session.commit()
+        return True
 
-    db_init.session.add(task)
-    db_init.session.commit()
+    except SQLAlchemyError:
+        return False
 
 
 def add_mentor(mentor_name, mentor_email, current_user_id):
+    """
+    create a new mentor and add mentee current user. If user already present, just add mentee.
+    :param mentor_name:
+    :param mentor_email:
+    :param current_user_id:
+    :return: None
+    """
+
     from .models import Mentors, Mentees
 
     # something's fishy, return
     if not mentor_name or not mentor_email:
-        return
+        return False
 
     mentee_present = Mentees.query.filter_by(id=current_user_id).first()
 
     if not mentee_present:
-        return
+        return False
 
     # check if the mentor is present
     mentor_present = Mentors.query.filter_by(mentor_email=mentor_email).first()
@@ -113,6 +129,10 @@ def add_mentor(mentor_name, mentor_email, current_user_id):
         mentor_present.mentee.append(mentee_present)
         db_init.session.add(mentor_present)
 
-    db_init.session.commit()
+    try:
+        db_init.session.commit()
+        return True
 
+    except SQLAlchemyError:
+        return False
 

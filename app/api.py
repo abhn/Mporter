@@ -1,9 +1,7 @@
 from flask_restful import Resource, reqparse
-from flask_security import login_required, current_user, auth_token_required
-from flask_security.utils import login_user, hash_password, verify_password
-from flask import Flask, request
+from flask_security import current_user, auth_token_required
+from flask_security.utils import verify_password
 from sqlalchemy.exc import SQLAlchemyError
-import json
 
 
 class MporterAPIAuth(Resource):
@@ -26,26 +24,37 @@ class MporterAPIAuth(Resource):
             if verify_password(password=args['password'], password_hash=user.password):
                 # we can even send remember me cookies and session id, but let's not do it for rest
                 # login_user(user, remember=True)
-                return {'token': user.get_auth_token()}, 200
+                return {'token': user.get_auth_token(), 'success': True}, 200
             else:
-                return {'token': None}, 401
+                return {'token': None, 'success': False}, 401
         except AttributeError:
-            return {'token': None}, 401
+            return {'token': None, 'success': False}, 401
 
 
 class MporterAPITask(Resource):
     @auth_token_required
     def get(self):
+        """
+        get user tasks
+        jwt authorization header required
+        :return: {tasks: [list of tasks]}
+        """
+
         from .services import get_mentee_tasks_dict
 
         user_id = current_user.get_id()
-        tasks = get_mentee_tasks_dict(user_id)
-
-        return {'tasks': tasks}
+        try:
+            tasks = get_mentee_tasks_dict(user_id)
+            return {'tasks': tasks, 'success': True}, 200
+        except SQLAlchemyError:
+            return {'success': False}
 
     @auth_token_required
     def post(self):
-        """create new task under the authorized user"""
+        """
+        create new task under the authorized user
+        :return: {message: 'success' or 'failed'}
+        """
 
         from .services import add_task
         parser = reqparse.RequestParser()
@@ -54,20 +63,27 @@ class MporterAPITask(Resource):
 
         try:
             add_task(current_user.get_id(), args['task'])
-            return {'message': 'success'}, 201
+            return {'success': True}, 201
         except SQLAlchemyError:
-            return {'message': 'failed'}, 500
+            return {'success': False}, 500
 
 
 class MporterAPIMentor(Resource):
     @auth_token_required
     def get(self):
+        """
+        get logged in mentee's mentors
+        :return: {'mentors': [list of mentors]
+        """
         from .services import get_mentee_mentors_dict
 
         user_id = current_user.get_id()
-        mentors = get_mentee_mentors_dict(user_id)
 
-        return {'mentors': mentors}
+        try:
+            mentors = get_mentee_mentors_dict(user_id)
+            return {'mentors': mentors, 'success': True}
+        except SQLAlchemyError:
+            return {'success': False}
 
     @auth_token_required
     def post(self):
@@ -82,6 +98,6 @@ class MporterAPIMentor(Resource):
 
         try:
             add_mentor(args['mentor_name'], args['mentor_email'], current_user.get_id())
-            return {'message': 'success'}, 201
+            return {'success': True}, 201
         except SQLAlchemyError:
-            return {'message': 'failure'}, 500
+            return {'success': False}, 500
