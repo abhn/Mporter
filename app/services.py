@@ -16,12 +16,33 @@ def get_mentee_tasks(user_id):
     return user_tasks
 
 
+def get_mentee_tasks_dict(user_id):
+    tasks = get_mentee_tasks(user_id)
+
+    obj = []
+    for task in tasks:
+        obj.append({'task': task.task, 'at_created': str(task.at_created)})
+
+    return obj
+
+
 def get_mentee_mentors(user_id):
     """helper function to get user's mentors"""
 
     from .models import Mentees
     mentee_mentors = Mentees.query.filter_by(id=user_id).first()
     return mentee_mentors.mentor
+
+
+def get_mentee_mentors_dict(user_id):
+
+    mentors = get_mentee_mentors(user_id)
+
+    obj = []
+    for mentor in mentors:
+        obj.append({'mentor_name': mentor.mentor_name, 'mentor_email': mentor.mentor_email})
+
+    return obj
 
 
 def get_mentee_data(current_user_id):

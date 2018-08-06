@@ -12,6 +12,8 @@ class DevConfig(object):
     SECURITY_SEND_REGISTER_EMAIL = False
     SECURITY_POST_LOGIN_VIEW = '/mentee'
     TESTING = False
+    SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authorization'
+    WTF_CSRF_ENABLED = False
 
 # _db = SQLAlchemy()
 

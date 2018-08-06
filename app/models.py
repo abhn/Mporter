@@ -65,6 +65,9 @@ class Tasks(db.Model):
     def __repr__(self):
         return '<Task {}>'.format(self.task)
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.task}
+
 
 # Flask-Security
 

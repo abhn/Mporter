@@ -1,5 +1,6 @@
 alembic==0.9.10
 amqp==2.3.2
+aniso8601==3.0.2
 atomicwrites==1.1.5
 attrs==18.1.0
 Babel==2.6.0
@@ -23,6 +24,7 @@ Flask-Login==0.4.1
 Flask-Mail==0.9.1
 Flask-Migrate==2.2.1
 Flask-Principal==0.4.0
+Flask-RESTful==0.3.6
 Flask-Security==3.0.0
 flask-shell-ipython==0.3.0
 Flask-SQLAlchemy==2.3.2
