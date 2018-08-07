@@ -79,6 +79,74 @@ def testapp(app):
     return app.test_client()
 
 
+def test_api_login_correct(testapp):
+    """test correct login attempt"""
+
+    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
+    assert json.loads(res.data)['success'] is True
+
+
+def test_api_login_incorrect(testapp):
+    """test incorrect login attempt"""
+
+    res = testapp.post('/api/auth', data=dict(email='unknown@user.com', password='wrong password'), follow_redirects=True)
+    assert json.loads(res.data)['success'] is False
+
+
+def test_api_tasks(testapp):
+    """test task getter and setter"""
+
+    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
+    token = json.loads(res.data)['token']
+    assert token is not None
+
+    res = testapp.post('/api/task',
+                       data=dict(task='this is a test task'),
+                       follow_redirects=True,
+                       headers={'Authorization': token})
+
+    assert res.status_code is 201
+
+    res = testapp.get('/api/task', headers={'Authorization': token, 'Content-Type': 'application/json'})
+    assert res.status_code is 200
+
+
+def test_api_mentors(testapp):
+    """test mentor getter and setter"""
+
+    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
+    token = json.loads(res.data)['token']
+    assert token is not None
+
+    res = testapp.post('/api/mentor',
+                       data=dict(mentor_name='test mentor name', mentor_email='test@mentor.com'),
+                       follow_redirects=True,
+                       headers={'Authorization': token})
+
+    assert res.status_code is 201
+
+    res = testapp.get('/api/mentor', headers={'Authorization': token, 'Content-Type': 'application/json'})
+    assert res.status_code is 200
+
+
+def test_views(testapp):
+    # TODO fix this, views are not getting included in testapp instance
+    res = testapp.get('/')
+    assert '404' in res.status
+
+    res = testapp.get('/mentee', follow_redirects=True)
+
+    # assert redirection to login page
+    # assert b'login' in res.data
+
+    # TODO find a way to actually test logged in response
+    res = testapp.post('/new-task', data=dict(task='this is a test task'))
+    assert '404' in res.status
+
+    res = testapp.post('/new-mentor', data=dict(mentor_name='test mentor', mentor_email='test@mentor.com'))
+    assert '404' in res.status
+
+
 def test_get_mentee_data(session):
     """test get_mentee_data service returns data for newely created mentee"""
 
@@ -282,72 +350,4 @@ def test_send_mail_driver(session):
     # mentor3 - 2
     # total emails to send - 4
     assert email_count == 4
-
-
-def test_api_login_correct(testapp):
-    """test correct login attempt"""
-
-    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
-    assert json.loads(res.data)['success'] is True
-
-
-def test_api_login_incorrect(testapp):
-    """test incorrect login attempt"""
-
-    res = testapp.post('/api/auth', data=dict(email='unknown@user.com', password='wrong password'), follow_redirects=True)
-    assert json.loads(res.data)['success'] is False
-
-
-def test_api_tasks(testapp):
-    """test task getter and setter"""
-
-    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
-    token = json.loads(res.data)['token']
-    assert token is not None
-
-    res = testapp.post('/api/task',
-                       data=dict(task='this is a test task'),
-                       follow_redirects=True,
-                       headers={'Authorization': token})
-
-    assert res.status_code is 201
-
-    res = testapp.get('/api/task', headers={'Authorization': token, 'Content-Type': 'application/json'})
-    assert res.status_code is 200
-
-
-def test_api_mentors(testapp):
-    """test mentor getter and setter"""
-
-    res = testapp.post('/api/auth', data=dict(email='admin@mporter.co', password='password'), follow_redirects=True)
-    token = json.loads(res.data)['token']
-    assert token is not None
-
-    res = testapp.post('/api/mentor',
-                       data=dict(mentor_name='test mentor name', mentor_email='test@mentor.com'),
-                       follow_redirects=True,
-                       headers={'Authorization': token})
-
-    assert res.status_code is 201
-
-    res = testapp.get('/api/mentor', headers={'Authorization': token, 'Content-Type': 'application/json'})
-    assert res.status_code is 200
-
-
-def test_views(testapp):
-    # TODO fix this, views are not getting included in testapp instance
-    res = testapp.get('/')
-    assert '404' in res.status
-
-    res = testapp.get('/mentee', follow_redirects=True)
-
-    # assert redirection to login page
-    # assert b'login' in res.data
-
-    # TODO find a way to actually test logged in response
-    res = testapp.post('/new-task', data=dict(task='this is a test task'))
-    assert '404' in res.status
-
-    res = testapp.post('/new-mentor', data=dict(mentor_name='test mentor', mentor_email='test@mentor.com'))
-    assert '404' in res.status
 
