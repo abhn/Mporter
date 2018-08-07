@@ -97,7 +97,7 @@ Following are the steps needed to put this app on [Heroku](https://heroku.com) w
 
 
 ### REST API
-The app exposes some rest apis for use via other application (or command line). All APIs are authenticated via JWT, and the JWT can be obtained in exchange of login credentials.
+The app exposes some REST APIs for use via other application (or command line). All APIs are authenticated via JWT, and the JWT can be obtained in exchange of login credentials.
 
 #### `[POST]/api/auth`
 - Description: Get an authentication token in exchange of email and password.
