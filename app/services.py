@@ -1,6 +1,7 @@
 from app import user_datastore, db_init
 from datetime import datetime, timedelta
 from sqlalchemy.exc import SQLAlchemyError
+from .exceptions import InvalidUsage
 
 
 def get_mentee_tasks(user_id):
@@ -93,7 +94,7 @@ def add_task(current_user_id, task):
         return True
 
     except SQLAlchemyError:
-        return False
+        raise InvalidUsage(status_code=400)
 
 
 def add_mentor(mentor_name, mentor_email, current_user_id):
@@ -114,7 +115,7 @@ def add_mentor(mentor_name, mentor_email, current_user_id):
     mentee_present = Mentees.query.filter_by(id=current_user_id).first()
 
     if not mentee_present:
-        return False
+        raise InvalidUsage(status_code=400)
 
     # check if the mentor is present
     mentor_present = Mentors.query.filter_by(mentor_email=mentor_email).first()
@@ -134,5 +135,5 @@ def add_mentor(mentor_name, mentor_email, current_user_id):
         return True
 
     except SQLAlchemyError:
-        return False
+        raise InvalidUsage(status_code=500)
 

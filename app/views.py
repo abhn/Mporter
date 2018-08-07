@@ -3,6 +3,8 @@ from flask import render_template, request, url_for, redirect
 from app import user_datastore, app, db_init
 from flask_security.utils import hash_password
 from .services import get_mentee_data, add_task, add_mentor
+from sqlalchemy.exc import SQLAlchemyError
+from .exceptions import InvalidUsage
 
 
 @app.before_first_request
@@ -20,11 +22,17 @@ def before_first_request():
     if not user_datastore.get_user('admin@mporter.co'):
         user_datastore.create_user(email='admin@mporter.co', password=encrypted_password)
 
-    db_init.session.commit()
+    try:
+        db_init.session.commit()
+    except SQLAlchemyError:
+        raise InvalidUsage(status_code=500)
 
     # make admin@mporter.co the admin user
     user_datastore.add_role_to_user('admin@mporter.co', 'admin')
-    db_init.session.commit()
+    try:
+        db_init.session.commit()
+    except SQLAlchemyError:
+        raise InvalidUsage(status_code=500)
 
 
 @app.route('/')
