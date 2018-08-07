@@ -12,6 +12,26 @@
 
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. 
 
+
+### Index
+- [Demo](#demo)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Vocabulary](#vocabulary)
+    - Tasks
+    - Mentee
+    - Mentor
+- [Getting Started](#getting-started)
+- [REST API](#rest-api)
+    - POST /api/auth
+    - POST /api/task
+    - GET /api/task
+    - POST /api/mentor
+    - GET /api/mentor
+- [Ingredients](#ingredients)
+- [Contributing](#contributing)
+- [License](#license)
+
 ### Demo
 - [https://mporter.co](https://mporter.co)
 
@@ -21,24 +41,6 @@ Have you ever faced the problem of discipline where you had to report your progr
 With **Mporter**, you just have to keep adding your *tasks* (things that you did) and the app handles timely reporting to the people that you add as mentors. 
 
 Yes, think of it like Twitter but with a twist. Instead of you getting the tweets of people you add, the people you add get your tweets (Tasks) instead.
-
-### Screenshots
-
-<div style="background-color: #333; padding: 10px">
-
-<img src="https://imgur.com/dG0yFkgl.png" style="border: 2px solid black"/>
-
-Normal user's home (all same except for the admin button)
-
-<img src="https://imgur.com/Ct2zJU9l.png" style="border: 2px solid black"/>
-
-Admin user's home (notice the admin button at the bottom)
-
-<img src="https://imgur.com/e1F6Hn4l.png" style="border: 2px solid black"/>
-
-Admin section accessible to only admin users
-
-</div>
 
 ### Features
 - **Multiple Mentee-Mentor support**. You can use one instance with your friends with overlap of Mentors in between the Mentees.
@@ -93,17 +95,69 @@ Following are the steps needed to put this app on [Heroku](https://heroku.com) w
     ```
 10. Click the `deploy manually` button again, and your app should (hopefully) be live. 
 
+
+### REST API
+The app exposes some REST APIs for use via other application (or command line). All APIs are authenticated via JWT, and the JWT can be obtained in exchange of login credentials.
+
+#### `[POST]/api/auth`
+- Description: Get an authentication token in exchange of email and password.
+- Request: `{email: <user_email>, password: <user_password>}` 
+- Response: `{token: <token | null>, success: <True | False>}`
+
+#### `[POST]/api/task`
+- Description: Create a new task under the authenticated user.
+- Request: `{task: "new task name"}`
+- Headers: `Authorization: <token>`
+- Response: `{success: <True | False>}`
+
+#### `[GET]/api/task`
+- Description: Fetch all tasks for the current day for the authenticated user
+- Request: `null`
+- Headers: `Authorization: <token>`
+- Response: 
+```javascript
+{
+    success: <True | False>, 
+    tasks: [
+        {task: <task>, at_created: <timestamp>, 
+        ...
+    ]
+}
+```
+
+#### `[POST]/api/mentor`
+- Description: Add a new mentor for the authenticated user. If mentor doesn't exist, create new mentor.
+- Request: `{mentor_name: "new mentor name", mentor_email: "test@mentor.com}`
+- Headers: `Authorization: <token>`
+- Response: `{success: <True | False>}`
+
+#### `[GET]/api/mentor`
+- Description: Fetch all mentors of the authenticated user
+- Request: `null`
+- Headers: `Authorization: <token>`
+- Response:
+```javascript
+{
+    success: <True | False>, 
+    mentors: [
+        {mentor_name: <name>, mentor_email: <email>, 
+        ...
+    ]
+}
+```
+
 ### Ingredients
 - [Flask-Admin](https://github.com/flask-admin/flask-admin) for the read to use admin pages like those Django gives you.
 - [Flask-Security](https://github.com/mattupstate/flask-security) for login/registration logic, session management etc.
 - [Celery Python](https://pypi.org/project/celery/) for scheduling asynchronous tasks.
 - [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.3/) for orm
 - [Pytest](https://docs.pytest.org/en/latest/) for testing
+- [Flask-RESTFul](https://flask-restful.readthedocs.io/en/latest/) for the REST APIs
 
 ### TODO
 1. Beautify `/mentee` page with some CSS and make it mobile responsive.
-1. Implement REST APIs for extending the functionality to non-web apps.
-2. Implement JWT auth for authentication of RESTful APIs
+2. <strike>Implement REST APIs for extending the functionality to non-web apps.</strike>
+2. <strike>Implement JWT auth for authentication of RESTful APIs</strike>
 3. Slack bot for posting task as well as receiving task notification
 4. PWA
 
