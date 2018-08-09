@@ -17,6 +17,7 @@ A simple flask project for easy reporting daily/weekly/monthly updates to one's 
 - [Demo](#demo)
 - [Introduction](#introduction)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Vocabulary](#vocabulary)
     - Tasks
     - Mentee
@@ -49,6 +50,11 @@ Yes, think of it like Twitter but with a twist. Instead of you getting the tweet
 - **Admin roles** are set up to limit the access of admin panel to few people. 
 - Clutter free UI, easy to use, fully open source.
 
+
+### Screenshots
+![Mentor](/tmp/mentors.png?raw=true "mentors screen")
+![Tasks](/tmp/tasks.png?raw=true "tasks screen")
+![Admin](/tmp/admin.png?raw=true "admin screen")
 
 ### Vocabulary
 - **Tasks**: Some piece of work that you did. 

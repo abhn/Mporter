@@ -6,59 +6,80 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="{{ url_for('static', filename='assets/js/ie/html5shiv.js') }}"></script><![endif]-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/normalize.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/mentee.css') }}" />
     <!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie9.css') }}" /><![endif]-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
 </head>
 
 <body>
 
-    <h1>Hello {{ user.user_email }}</h1>
+    <nav class="nav">
+        <ul class='tabs tabs-2'>
+            <li><a href='#tab1'>Tasks</a></li>
+            <li><a href='#tab2'>Mentors</a></li>
+        </ul>
+        <ul class="tabs-2">
+            <li><a href="/logout">Logout</a></li>
+            <li>
+                {% if user.is_admin %}
+                    <a href="/admin">Admin</a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
 
-    <hr/>
+    <div class="container">
+        <h4 class="page-title-greet">Hello, {{ user.user_email }}</h4>
 
-    <h3>Today's Tasks</h3>
-    <ol>
-        {% for task in user.user_tasks %}
-            <li>{{ task.task }}</li>
-        {% endfor %}
-    </ol>
 
-    <h3>Add New Task</h3>
 
-    <form action="/new-task" method="post">
-        <input name="task" type="text" id="input-task" placeholder="input new task" required/>
-        <input name="submit" type="submit" value="Add Task"/>
-    </form>
+        <div id='tab1'>
 
-    <br/>
-    <hr/>
+            <form class="task-form" action="/new-task" method="post">
+                <input name="task" type="text" id="input-task" placeholder="input new task" required/>
+                <input name="submit" type="submit" value="Add Task"/>
+            </form>
 
-    <h3>Your Mentors</h3>
+            <h3>Today's Tasks</h3>
+            <ol>
+                {% for task in user.user_tasks %}
+                    <li>{{ task.task }}</li>
+                {% endfor %}
+            </ol>
 
-    <ol>
-        {% for mentor in user.user_mentors %}
-            <li>{{ mentor.mentor_name }} ({{ mentor.mentor_email }})</li>
-        {% endfor %}
-    </ol>
+        </div>
 
-    <h3>Add New Mentor</h3>
+        <div id='tab2'>
 
-    <form action="/new-mentor" method="post">
-        <input name="mentor-name" type="text" id="input-mentor-name" placeholder="input mentor's name" required/>
-        <input name="mentor-email" type="email" id="input-mentor-email" placeholder="input mentor's email" required/>
-        <input name="submit" type="submit" value="Add Mentor"/>
-    </form>
+            <h3>Add New Mentor</h3>
 
-    <br/>
-    <hr/>
+            <form action="/new-mentor" method="post">
+                <input name="mentor-name" type="text" id="input-mentor-name" placeholder="input mentor's name" required/>
+                <input name="mentor-email" type="email" id="input-mentor-email" placeholder="input mentor's email" required/>
+                <br/><br/>
+                <input name="submit" type="submit" value="Add Mentor"/>
+            </form>
 
-    <a href="/logout">Logout</a>
-    {% if user.is_admin %}
-        | <a href="/admin">Admin</a>
-    {% endif %}
+            <h3>Your Mentors</h3>
+
+            <ol>
+                {% for mentor in user.user_mentors %}
+                    <li>{{ mentor.mentor_name }} ({{ mentor.mentor_email }})</li>
+                {% endfor %}
+            </ol>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <a href="https://mporter.co">Mporter</a>&nbsp;by&nbsp;<a href="https://github.com/abhn">Abhishek Nagekar</a>
+    </footer>
 
     <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/mentee.js') }"></script>
+    <script src="{{ url_for('static', filename='assets/js/mentee.js') }}"></script>
 </body>
 
 </html>
