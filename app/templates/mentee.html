@@ -3,6 +3,11 @@
 <html>
 <head>
     <title>Hello {{ user.user_email }} | Welcome to Mporter</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="{{ url_for('static', filename='assets/js/ie/html5shiv.js') }}"></script><![endif]-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/mentee.css') }}" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie9.css') }}" /><![endif]-->
 </head>
 
 <body>
@@ -51,6 +56,9 @@
     {% if user.is_admin %}
         | <a href="/admin">Admin</a>
     {% endif %}
+
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/mentee.js') }"></script>
 </body>
 
 </html>
