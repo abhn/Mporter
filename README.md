@@ -10,7 +10,7 @@
 [![codecov](https://codecov.io/gh/abhn/Mporter/branch/master/graph/badge.svg?token=fofAGeN2Od)](https://codecov.io/gh/abhn/Mporter) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. 
+A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. You need to simply add tasks the way you write commit messages, and Mporter will take care of delivering an email to your mentors at a preset time.
 
 
 ### Index
@@ -48,6 +48,8 @@ Yes, think of it like Twitter but with a twist. Instead of you getting the tweet
 - **Login & Register** support for creation and authentication of Mentee accounts.
 - **Admin panel** for easy administration of users, tasks etc.
 - **Admin roles** are set up to limit the access of admin panel to few people. 
+- **RESTFul APIs** for integrating Mporter in your workflow, be it terminal (using curl), phone or browser plugin.
+- **Traditional & JWT** based auth to suit wide range of usecases.
 - Clutter free UI, easy to use, fully open source.
 
 
