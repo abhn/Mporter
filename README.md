@@ -54,8 +54,16 @@ Yes, think of it like Twitter but with a twist. Instead of you getting the tweet
 
 
 ### Screenshots
-![Mentor](/tmp/mentors.png?raw=true "mentors screen")
+A list of tasks welcome you as you log into the app
+
 ![Tasks](/tmp/tasks.png?raw=true "tasks screen")
+
+You can find your mentors in the mentors tab.
+
+![Mentor](/tmp/mentors.png?raw=true "mentors screen")
+
+For the admin users, there's a panel for easy CRUD operations
+
 ![Admin](/tmp/admin.png?raw=true "admin screen")
 
 ### Vocabulary
