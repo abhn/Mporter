@@ -22,11 +22,11 @@
         </ul>
         <ul class="tabs-2">
             <li><a href="/logout">Logout</a></li>
-            <li>
-                {% if user.is_admin %}
+            {% if user.is_admin %}
+                <li>
                     <a href="/admin">Admin</a>
-                {% endif %}
-            </li>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 
