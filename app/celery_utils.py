@@ -1,6 +1,7 @@
 from celery import Celery
+from celery.schedules import crontab
 from app import app
-from .app_config import CELERY_BROKER_URL
+from .app_config import CELERY_BROKER_URL, SEND_MAIL_HOUR
 
 
 def make_celery(app):
@@ -39,11 +40,11 @@ def setup_periodic_tasks(sender, **kwargs):
     Sets up a celery scheduled task
     Can be used to call a routine at a particular interval or at some specific time of the day
     """
-    # sender.add_periodic_task(
-    #     crontab(hour=SEND_MAIL_HOUR),
-    #     handle_mail.s(),
-    # )
-    sender.add_periodic_task(10.0, send_email_driver().s(), name='add every 10')
+    sender.add_periodic_task(
+        crontab(hour=SEND_MAIL_HOUR),
+        handle_mail.s(),
+    )
+    # sender.add_periodic_task(10.0, send_email_driver().s(), name='add every 10')
 
 
 @celery.task

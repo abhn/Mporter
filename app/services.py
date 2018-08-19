@@ -42,6 +42,8 @@ def get_mentee_data(current_user_id):
         is_admin = True if user.roles[0].name == 'admin' else False
     except AttributeError:
         is_admin = False
+    except IndexError:
+        is_admin = False
 
     user_tasks = get_mentee_tasks(current_user_id)
 
