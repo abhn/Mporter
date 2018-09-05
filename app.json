@@ -5,7 +5,8 @@
   "success_url": "/",
   "addons": [
     "heroku-postgresql",
-    "cloudamqp"
+    "cloudamqp",
+    "mailgun"
   ],
   "keywords": [
     "productivity",
