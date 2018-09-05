@@ -5,7 +5,7 @@
   "success_url": "/",
   "addons": [
     "heroku-postgresql",
-    "rabbitmq-bigwig"
+    "bigwig"
   ],
   "keywords": [
     "productivity",
@@ -13,7 +13,7 @@
     "email",
     "python"
   ],
-  "env": {  
+  "env": {
     "PUBLIC_URL": {
       "description": "The HTTPS URL of this app: either your custom domain or default 'herokuapp.com' hostname.",
       "value": "https://YOURAPPNAME.herokuapp.com"
