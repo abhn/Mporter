@@ -16,7 +16,7 @@ A simple flask project for easy reporting daily/weekly/monthly updates to one's 
 - [https://mporter.co](https://mporter.co)
 
 ### One Click Installer
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/heroku/node-js-sample)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/abhn/mporter)
 
 ### Index
 - [Introduction](#introduction)
