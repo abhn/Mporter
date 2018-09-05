@@ -112,7 +112,8 @@ Following are the steps needed to put this app on [Heroku](https://heroku.com) w
     export HEROKU_POSTGRESQL_GRAY_URL=<second heroku data addon's url>
     
     ```
-If you're using Heroku (or used the one click installer), all except `MPORTER_SECRET` will already be present. To view the values (and copy them locally), do a `heroku config` in your project directory
+If you're using Heroku (or used the one click installer), all except `MPORTER_SECRET` will already be present. To view the values (and copy them locally), do a `heroku config` in your project directory.
+
 10. Click the `deploy manually` button again, and your app should (hopefully) be live. 
 
 
