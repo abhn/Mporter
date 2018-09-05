@@ -105,13 +105,15 @@ Following are the steps needed to put this app on [Heroku](https://heroku.com) w
     
     export FLASK_APP=app
     export MPORTER_SECRET=<some random>
-    export CELERY_BROKER_URL=<the rabbitmq bigwig url>
-    export MAILGUN_KEY=<mailgun key>
-    export MAILGUN_SANDBOX=<mailgun sandboxurl>
-    export SQLALCHEMY_DATABASE_URI=<first heroku data addon's url>
-    export SQLALCHEMY_DATABASE_URI_TEST=<second heroku data addon's url>
+    export RABBITMQ_BIGWIG_URL=<the rabbitmq bigwig url>
+    export MAILGUN_API_KEY=<mailgun key>
+    export MAILGUN_DOMAIN=<mailgun sandboxurl>
+    export DATABASE_URL=<first heroku data addon's url>
+    export HEROKU_POSTGRESQL_GRAY_URL=<second heroku data addon's url>
     
     ```
+If you're using Heroku (or used the one click installer), all except `MPORTER_SECRET` will already be present. To view the values (and copy them locally), do a `heroku config` in your project directory.
+
 10. Click the `deploy manually` button again, and your app should (hopefully) be live. 
 
 
