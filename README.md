@@ -12,9 +12,13 @@
 
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. You need to simply add tasks the way you write commit messages, and Mporter will take care of delivering an email to your mentors at a preset time.
 
+### Demo
+- [https://mporter.co](https://mporter.co)
+
+### One Click Installer
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/abhn/mporter)
 
 ### Index
-- [Demo](#demo)
 - [Introduction](#introduction)
 - [Features](#features)
 - [Screenshots](#screenshots)
@@ -33,8 +37,6 @@ A simple flask project for easy reporting daily/weekly/monthly updates to one's 
 - [Contributing](#contributing)
 - [License](#license)
 
-### Demo
-- [https://mporter.co](https://mporter.co)
 
 ### Introduction
 Have you ever faced the problem of discipline where you had to report your progress with a project or a problem to a person (mentor?), but you totally forgot? I have, and this little project tries to solve that problem.
@@ -80,8 +82,9 @@ For the admin users, there's a panel for easy CRUD operations
 
 - **Mentor**: A person who receives your Task reports for the time interval.
     - You can add multiple mentors in the `/mentee` page, which is like your profile page
-
-### Getting Started
+    
+    
+### Installation
 To use this application, some preliminary steps have to be performed. While most of it is simple command copy-pasting, it can get thick at times. In those times, use Google and search for error messages. 
 
 Following are the steps needed to put this app on [Heroku](https://heroku.com) which is a nice place to host hobby projects, but with little more effort, you can put this up on a private server like [Digital Ocean's droplet](https://www.digitalocean.com/products/droplets/) or even your Raspberry Pi.
