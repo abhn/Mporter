@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Welcome to Mporter</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="{{ url_for('static', filename='assets/js/ie/html5shiv.js') }}"></script><![endif]-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/normalize.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/mentee.css') }}" />
+    <!--[if lte IE 9]><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/ie9.css') }}" /><![endif]-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <nav class="nav">
+        <ul class='tabs tabs-2'>
+            <li><a href='https://github.com/abhn/Mporter'>Source Code</a></li>
+        </ul>
+        <ul class="tabs-2">
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="auth-form">
+            {% from "security/_macros.html" import render_field_with_errors %}
+            <form method="post" action="{{ url_for_security('login') }}">
+
+                <div class="auth-field">{{ render_field_with_errors(login_user_form.email, placeholder="email", type="email") }}</div>
+                <div class="auth-field">{{ render_field_with_errors(login_user_form.password, placeholder="password", type="password") }}</div>
+                <div class="auth-field">
+                    {{ login_user_form.submit }}
+                    <a href="/register">Register</a>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://mporter.co">Mporter</a>&nbsp;by&nbsp;<a href="https://github.com/abhn">Abhishek Nagekar</a>
+    </footer>
+
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/mentee.js') }}"></script>
+</body>
+
+</html>
