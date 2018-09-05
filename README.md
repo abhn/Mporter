@@ -13,7 +13,7 @@
 A simple flask project for easy reporting daily/weekly/monthly updates to one's mentor. You need to simply add tasks the way you write commit messages, and Mporter will take care of delivering an email to your mentors at a preset time.
 
 ### Demo
-- [https://mporter.co](https://mporter.co)
+[https://mporter.co](https://mporter.co)
 
 ### One Click Installer
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/abhn/mporter)
