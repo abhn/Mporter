@@ -5,7 +5,7 @@
   "success_url": "/",
   "addons": [
     "heroku-postgresql",
-    "bigwig"
+    "cloudamqp"
   ],
   "keywords": [
     "productivity",
