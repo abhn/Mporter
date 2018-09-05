@@ -21,26 +21,6 @@
     "MPORTER_SECRET": {
       "description": "A random secrect",
       "required": true
-    },
-    "CELERY_BROKER_URL": {
-      "description": "Celery broker url, use rabbitmq bigwig's url",
-      "required": true
-    },
-    "MAILGUN_KEY": {
-      "description": "Mailgun key",
-      "required": true
-    },
-    "MAILGUN_SANDBOX": {
-      "description": "Mailgun sandbox url",
-      "required": true
-    },
-    "SQLALCHEMY_DATABASE_URI": {
-      "description": "postgres database url",
-      "required": true
-    },
-    "SQLALCHEMY_DATABASE_URI_TEST": {
-      "description": "Optional database for testing purposes/running CI",
-      "required": false
     }
   }
 }
