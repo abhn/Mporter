@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 const config = {
-    entry:  __dirname + '/src/index.jsx',
+    entry:  __dirname + '/index.jsx',
     output: {
         path: '/home/abhishek/code/Mporter/static/dist',
         filename: 'bundle.js',
