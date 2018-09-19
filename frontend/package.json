@@ -16,6 +16,7 @@
     "@babel/preset-env": " ^7.0.0-beta.31",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "webpack": "^4.19.0",
@@ -25,6 +26,9 @@
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
+    ],
+    "plugins": [
+      "transform-class-properties"
     ]
   },
   "dependencies": {
