@@ -25,7 +25,8 @@ class MporterAPIAuth(Resource):
             if verify_password(password=args['password'], password_hash=user.password):
                 # we can even send remember me cookies and session id, but let's not do it for rest
                 # login_user(user, remember=True)
-                return {'token': user.get_auth_token(), 'success': True}, 200
+                is_admin = len([role for role in user.roles if role.name == 'admin']) == 1
+                return {'token': user.get_auth_token(), 'success': True, 'is_admin': is_admin}, 200
             else:
                 return {'token': None, 'success': False}, 401
         except AttributeError:
