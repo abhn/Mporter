@@ -25,7 +25,7 @@ def get_mentee_tasks_dict(user_id):
 
     obj = []
     for task in tasks:
-        obj.append({'task': task.task, 'at_created': str(task.at_created)})
+        obj.append({'id': task.id, 'task': task.task, 'at_created': str(task.at_created)})
 
     return obj
 
@@ -45,7 +45,7 @@ def get_mentee_mentors_dict(user_id):
 
     obj = []
     for mentor in mentors:
-        obj.append({'mentor_name': mentor.mentor_name, 'mentor_email': mentor.mentor_email})
+        obj.append({'id': mentor.id, 'mentor_name': mentor.mentor_name, 'mentor_email': mentor.mentor_email})
 
     return obj
 
@@ -139,3 +139,43 @@ def add_mentor(mentor_name, mentor_email, current_user_id):
     except SQLAlchemyError:
         raise InvalidUsage(status_code=500)
 
+
+def delete_task(current_user_id, task_id):
+    from .models import Tasks, Mentees
+
+    mentee = Mentees.query.filter_by(id=current_user_id).first()
+
+    task = Tasks.query.filter_by(id=task_id).first()
+
+    # bad mentee or task id supplied
+    if not mentee or not task:
+        raise InvalidUsage(status_code=400)
+
+    # unauthorized
+    if task.mentee_id is not mentee.id:
+        raise InvalidUsage(status_code=403)
+    
+    try:
+        db_init.session.delete(task)
+        db_init.session.commit()
+    except SQLAlchemyError:
+        raise InvalidUsage(status_code=500)    
+
+
+def delete_mentor(current_user_id, mentor_id):
+    from .models import Mentees, Mentors
+
+    mentee = Mentees.query.filter_by(id=current_user_id).first()
+    mentor = Mentors.query.filter_by(id=mentor_id).first()
+
+    # bad mentee or mentor id supplied
+    if not mentee or not mentor:
+        raise InvalidUsage(status_code=400)
+
+    try:
+        mentee.mentor.remove(mentor)
+        db_init.session.add(mentee)
+        db_init.session.commit()
+    except SQLAlchemyError:
+        raise InvalidUsage(status_code=500)
+    

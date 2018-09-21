@@ -87,3 +87,8 @@ def new_mentor():
     add_mentor(mentor_name, mentor_email, current_user_id)
 
     return redirect(url_for('mentee'))
+
+
+@app.route('/beta')
+def beta():
+    return render_template('pwa.html')

@@ -3,7 +3,6 @@
 # Packages
 *.egg
 *.egg-info
-dist
 build
 eggs
 parts
@@ -29,8 +28,11 @@ venv
 build
 venv
 .idea
+.vscode/
 
 .pytest_cache/
 instance/
 
 env.sh
+
+*node_modules/

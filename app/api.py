@@ -25,7 +25,8 @@ class MporterAPIAuth(Resource):
             if verify_password(password=args['password'], password_hash=user.password):
                 # we can even send remember me cookies and session id, but let's not do it for rest
                 # login_user(user, remember=True)
-                return {'token': user.get_auth_token(), 'success': True}, 200
+                is_admin = len([role for role in user.roles if role.name == 'admin']) == 1
+                return {'token': user.get_auth_token(), 'success': True, 'is_admin': is_admin}, 200
             else:
                 return {'token': None, 'success': False}, 401
         except AttributeError:
@@ -68,6 +69,24 @@ class MporterAPITask(Resource):
         except SQLAlchemyError:
             return {'success': False}, 500
 
+    @auth_token_required
+    def delete(self):
+        """
+        delete a task under the authorized user
+        """
+        from .services import delete_task
+        parser = reqparse.RequestParser()
+        parser.add_argument('task_id', type=int, help='ID of the task')
+
+        args = parser.parse_args()
+
+        try:
+            delete_task(current_user.get_id(), args['task_id'])
+            return {'success': True}, 200
+        except SQLAlchemyError:
+            return {'success': False}, 500
+
+
 
 class MporterAPIMentor(Resource):
     @auth_token_required
@@ -100,6 +119,23 @@ class MporterAPIMentor(Resource):
         try:
             add_mentor(args['mentor_name'], args['mentor_email'], current_user.get_id())
             return {'success': True}, 201
+        except SQLAlchemyError:
+            return {'success': False}, 500
+    
+    @auth_token_required
+    def delete(self):
+        """
+        delete a mentor from under the logged in user
+        """
+
+        from .services import delete_mentor
+        parser = reqparse.RequestParser()
+        parser.add_argument('mentor_id', type=str, help='ID of mentor')
+        args = parser.parse_args()
+
+        try:
+            delete_mentor(current_user.get_id(), args['mentor_id'])
+            return {'success': True}, 200
         except SQLAlchemyError:
             return {'success': False}, 500
 
