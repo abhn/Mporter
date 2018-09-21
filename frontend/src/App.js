@@ -29,6 +29,13 @@ const MainContent = styled.div`
 `;
 
 class App extends React.Component {
+
+    componentDidMount() {
+        if(!localStorage.getItem('token')) {
+            window.location.href = '#/login'
+        }
+    }
+
     render () {
         return (
             <Container>

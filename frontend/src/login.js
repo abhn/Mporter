@@ -1,4 +1,11 @@
 import React from 'react';
+import { Input, Button } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+    max-width: 400px;
+    margin: 30px auto;
+`;
 
 class Login extends React.Component {
 
@@ -50,11 +57,20 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
-                <input type="email" value={this.state.email} onChange={this.emailChange}/> 
-                <input type="password" value={this.state.password} onChange={this.passwordChange}/> 
-                <button onClick={this.submit}>Login</button>
-            </div>
+            <Wrapper>
+                <h3>Login into Mporter</h3>
+                <Input fluid placeholder="Email" type="email" value={this.state.email} onChange={this.emailChange} />
+                <br/>
+                <Input fluid placeholder="Password" type="password" value={this.state.password} onChange={this.passwordChange} />
+                <br/>
+                <center>
+                    <Button onClick={this.submit}>Login</Button>
+                    <br/>
+                    Don't have an account? <a href="/register">Register</a>
+                </center>
+                <div>
+                </div>
+            </Wrapper>
         )
     }
 }
