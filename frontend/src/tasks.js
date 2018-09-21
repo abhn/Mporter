@@ -1,4 +1,15 @@
 import React from 'react';
+import { Input, Button, Table } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+
+const InputDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+`;
+
 
 class Tasks extends React.Component {
     state = {
@@ -10,7 +21,9 @@ class Tasks extends React.Component {
         if(!localStorage.getItem('token')) {
             this.props.history.push('/login');
         }
-        this.getTasks();
+        else {
+            this.getTasks();
+        }
     }
 
     getTasks = () => {
@@ -26,9 +39,27 @@ class Tasks extends React.Component {
     formatTasks = () => {
         let { tasks } = this.state;
         return (
-            <ul>
-                {tasks.map(task => <li key={task.at_created}>{task.task} - {task.at_created}</li>)}
-            </ul>
+            <Table celled striped>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Serial</Table.HeaderCell>                        
+                        <Table.HeaderCell>Task</Table.HeaderCell>
+                        <Table.HeaderCell>Created Date</Table.HeaderCell>
+                        <Table.HeaderCell>Actions</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                {tasks.map((task, i) => 
+                    <Table.Body>
+                        <Table.Row key={task.at_created}>
+                            <Table.Cell>{i+1}</Table.Cell>
+                            <Table.Cell>{task.task}</Table.Cell>
+                            <Table.Cell>{task.at_created}</Table.Cell>
+                            <Table.Cell></Table.Cell>
+                        </Table.Row>
+                    </Table.Body>
+                )}
+            </Table>
         )
     }
 
@@ -58,10 +89,12 @@ class Tasks extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <input type="text" value={this.state.newTask} onChange={this.newTaskChange}/>
-                    <button onClick={this.newTaskSubmit}>Add</button>
-                </div>
+                <InputDiv>
+                    <Input placeholder="New task..." value={this.state.newTask} onChange={this.newTaskChange} action>
+                        <input/>
+                        <Button onClick={this.newTaskSubmit}>Add</Button>
+                    </Input>
+                </InputDiv>
                 <div>
                     {this.formatTasks()}
                 </div>

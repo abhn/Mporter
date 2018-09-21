@@ -13,7 +13,8 @@ const config = {
         rules: [
             { test: /\.jsx?/, exclude: /node_modules/, use: 'babel-loader' }
         ]
-    }
+    },
+    devtool: 'source-map'
 };
 
 module.exports = config;

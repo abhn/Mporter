@@ -1,4 +1,14 @@
 import React from 'react';
+import { Input, Button, Table } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+
+const InputDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+`;
 
 class Mentors extends React.Component {
 
@@ -12,7 +22,9 @@ class Mentors extends React.Component {
         if(!localStorage.getItem('token')) {
             this.props.history.push('/login');
         }
-        this.getMentors();
+        else {
+            this.getMentors();
+        }
     }
 
     getMentors = () => {
@@ -28,9 +40,28 @@ class Mentors extends React.Component {
     formatMentors = () => {
         let { mentors } = this.state;
         return (
-            <ul>
-                {mentors.map(mentor => <li key={mentor.mentor_email}>{mentor.mentor_name} - {mentor.mentor_email}</li>)}
-            </ul>
+
+            <Table celled striped>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>Serial</Table.HeaderCell>                        
+                        <Table.HeaderCell>Mentor Name</Table.HeaderCell>
+                        <Table.HeaderCell>Mentor Email</Table.HeaderCell>
+                        <Table.HeaderCell>Actions</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                {mentors.map((mentor, i) => 
+                    <Table.Body>
+                        <Table.Row key={mentor.mentor_email}>
+                            <Table.Cell>{i+1}</Table.Cell>
+                            <Table.Cell>{mentor.mentor_name}</Table.Cell>
+                            <Table.Cell>{mentor.mentor_email}</Table.Cell>
+                            <Table.Cell></Table.Cell>
+                        </Table.Row>
+                    </Table.Body>
+                )}
+            </Table>
         )
     }
 
@@ -67,11 +98,13 @@ class Mentors extends React.Component {
     render() {
         return (
             <div>
-                <div>
-                    <input type="text" placeholder="Mentor name" value={this.state.newMentorName} onChange={this.newMentorNameChange}/>
-                    <input type="text" placeholder="Mentor email" value={this.state.newMentorEmail} onChange={this.newMentorEmailChange}/>
-                    <button onClick={this.newMentorSubmit}>Add</button>
-                </div>
+                <InputDiv>
+                    <Input placeholder="Mentor name" value={this.state.newMentorName} onChange={this.newMentorNameChange} />
+                    <Input placeholder="Mentor email" value={this.state.newMentorEmail} onChange={this.newMentorEmailChange} action>
+                        <input/>
+                        <Button onClick={this.newMentorSubmit}>Add</Button>
+                    </Input>
+                </InputDiv>
                 <div>
                     {this.formatMentors()}
                 </div>

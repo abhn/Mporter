@@ -41,7 +41,9 @@ class Login extends React.Component {
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data);
             localStorage.setItem('token', data.token);
+            localStorage.setItem('is_admin', data.is_admin);
             this.props.history.push('/tasks');
         })
     }
