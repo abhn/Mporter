@@ -9,7 +9,7 @@ class Settings extends React.Component {
     }
 
     render() {
-        return <div>settings</div>
+        return <div>settings coming soon</div>
     }
 }
 

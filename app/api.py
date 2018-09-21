@@ -69,6 +69,24 @@ class MporterAPITask(Resource):
         except SQLAlchemyError:
             return {'success': False}, 500
 
+    @auth_token_required
+    def delete(self):
+        """
+        delete a task under the authorized user
+        """
+        from .services import delete_task
+        parser = reqparse.RequestParser()
+        parser.add_argument('task_id', type=int, help='ID of the task')
+
+        args = parser.parse_args()
+
+        try:
+            delete_task(current_user.get_id(), args['task_id'])
+            return {'success': True}, 200
+        except SQLAlchemyError:
+            return {'success': False}, 500
+
+
 
 class MporterAPIMentor(Resource):
     @auth_token_required
@@ -101,6 +119,23 @@ class MporterAPIMentor(Resource):
         try:
             add_mentor(args['mentor_name'], args['mentor_email'], current_user.get_id())
             return {'success': True}, 201
+        except SQLAlchemyError:
+            return {'success': False}, 500
+    
+    @auth_token_required
+    def delete(self):
+        """
+        delete a mentor from under the logged in user
+        """
+
+        from .services import delete_mentor
+        parser = reqparse.RequestParser()
+        parser.add_argument('mentor_id', type=str, help='ID of mentor')
+        args = parser.parse_args()
+
+        try:
+            delete_mentor(current_user.get_id(), args['mentor_id'])
+            return {'success': True}, 200
         except SQLAlchemyError:
             return {'success': False}, 500
 

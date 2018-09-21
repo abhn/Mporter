@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Table } from 'semantic-ui-react';
+import { Input, Button, Table, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 
@@ -15,7 +15,8 @@ class Mentors extends React.Component {
     state = {
         mentors: [],
         newMentorName: '',
-        newMentorEmail: ''
+        newMentorEmail: '',
+        deleteLoading: false
     }
 
     componentDidMount() {
@@ -37,6 +38,26 @@ class Mentors extends React.Component {
         .then(data => this.setState({ mentors: data.mentors }));
     }
 
+    deleteMentor = (mentor) => {
+        this.setState({ deleteLoading: true })
+        fetch('/api/mentor', {
+            method: 'delete',
+            body: JSON.stringify({
+                // work here
+                mentor_id: mentor.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem('token')
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ deleteLoading: false })
+            this.getMentors();
+        })
+    }
+
     formatMentors = () => {
         let { mentors } = this.state;
         return (
@@ -51,16 +72,20 @@ class Mentors extends React.Component {
                     </Table.Row>
                 </Table.Header>
 
-                {mentors.map((mentor, i) => 
-                    <Table.Body>
+                <Table.Body>
+                    {mentors.map((mentor, i) => 
                         <Table.Row key={mentor.mentor_email}>
                             <Table.Cell>{i+1}</Table.Cell>
                             <Table.Cell>{mentor.mentor_name}</Table.Cell>
                             <Table.Cell>{mentor.mentor_email}</Table.Cell>
-                            <Table.Cell></Table.Cell>
+                            <Table.Cell>
+                                <Button icon negative onClick={() => this.deleteMentor(mentor)} loading={this.state.deleteLoading}>
+                                    <Icon name='delete' />
+                                </Button>
+                            </Table.Cell>
                         </Table.Row>
-                    </Table.Body>
-                )}
+                    )}
+                </Table.Body>
             </Table>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, Table } from 'semantic-ui-react';
+import { Input, Button, Table, Icon, Modal } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 
@@ -14,7 +14,9 @@ const InputDiv = styled.div`
 class Tasks extends React.Component {
     state = {
         tasks: [],
-        newTask: ''
+        newTask: '',
+        deleteLoading: false,
+        addLoading: false
     }
 
     componentDidMount() {
@@ -36,6 +38,26 @@ class Tasks extends React.Component {
         .then(data => this.setState({ tasks: data.tasks }));
     }
 
+    deleteTask = task => {
+        this.setState({ deleteLoading: true })
+        fetch('/api/task', {
+            method: 'delete',
+            body: JSON.stringify({
+                // work here
+                task_id: task.id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem('token')
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            this.setState({ deleteLoading: false })
+            this.getTasks();
+        })
+    }
+
     formatTasks = () => {
         let { tasks } = this.state;
         return (
@@ -49,16 +71,20 @@ class Tasks extends React.Component {
                     </Table.Row>
                 </Table.Header>
 
-                {tasks.map((task, i) => 
-                    <Table.Body>
+                <Table.Body>
+                    {tasks.map((task, i) => 
                         <Table.Row key={task.at_created}>
                             <Table.Cell>{i+1}</Table.Cell>
                             <Table.Cell>{task.task}</Table.Cell>
                             <Table.Cell>{task.at_created}</Table.Cell>
-                            <Table.Cell></Table.Cell>
+                            <Table.Cell>
+                                <Button icon negative onClick={() => this.deleteTask(task)} loading={this.state.deleteLoading}>
+                                    <Icon name='delete' />
+                                </Button>
+                            </Table.Cell>
                         </Table.Row>
-                    </Table.Body>
-                )}
+                    )}
+                </Table.Body>
             </Table>
         )
     }
@@ -70,6 +96,7 @@ class Tasks extends React.Component {
     }
 
     newTaskSubmit = () => {
+        this.setState({ addLoading: true });
         fetch('/api/task', {
             method: 'post',
             body: JSON.stringify({
@@ -81,7 +108,7 @@ class Tasks extends React.Component {
             }
         })
         .then(res => {
-            this.setState({newTask: ''})
+            this.setState({ newTask: '', addLoading: false })
             this.getTasks();
         })
     }
@@ -92,7 +119,7 @@ class Tasks extends React.Component {
                 <InputDiv>
                     <Input placeholder="New task..." value={this.state.newTask} onChange={this.newTaskChange} action>
                         <input/>
-                        <Button onClick={this.newTaskSubmit}>Add</Button>
+                        <Button onClick={this.newTaskSubmit} loading={this.state.addLoading}>Add</Button>
                     </Input>
                 </InputDiv>
                 <div>
