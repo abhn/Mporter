@@ -1,3 +1,3 @@
+release: chmod u+x release.sh && ./release.sh
 web: gunicorn app:app --log-file -
-release: flask db upgrade
 heroku ps:scale web=1
