@@ -52,7 +52,7 @@ psycopg2==2.7.5
 ptyprocess==0.6.0
 py==1.5.4
 pycparser==2.18
-Pygments==2.2.0
+Pygments==2.7.4
 pytest==3.6.3
 pytest-cov==2.5.1
 pytest-flask-sqlalchemy-transactions==1.0.1
