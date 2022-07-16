@@ -50,7 +50,7 @@ pluggy==0.6.0
 prompt-toolkit==1.0.15
 psycopg2==2.7.5
 ptyprocess==0.6.0
-py==1.5.4
+py==1.10.0
 pycparser==2.18
 Pygments==2.2.0
 pytest==3.6.3
