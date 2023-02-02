@@ -73,5 +73,5 @@ unidiff==0.5.5
 urllib3==1.23
 vine==1.1.4
 wcwidth==0.1.7
-Werkzeug==0.14.1
+Werkzeug==0.15.5
 WTForms==2.2.1
